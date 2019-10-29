@@ -48,16 +48,14 @@ Console](https://bixbydevelopers.com/dev/docs/dev-guide/developers/testing.debug
 From there, you can click on the target circle to expand the dialog into its
 subcomponents, each with a link to jump to the source code file behind it.*
 
+  > *Tip: Check out how you can utilize [value dialog fragment](https://bixbydevelopers.com/dev/docs/reference/ref-topics/dialog-modes.dialog-fragments#value-fragment) to customize the dialog*
+
   > *Tip: The following match patterns gives you a handle to the FindMovie Action*
 ```
 Movie (this) {
   from-output: FindMovie(find)
 }
 ```
-
-  > *Pro tip: You can tell the planner how to handle multiple `ActorName` values
-at once by wrapping them with a [Role](https://bixbydevelopers.com/dev/docs/dev-guide/developers/training.intro-training#add-context-with-roles)
-annotation for `Actor`*
 
 ## Rating
 5 stars for asking Bixby "Tell me about the Aladdin movie that features Will
