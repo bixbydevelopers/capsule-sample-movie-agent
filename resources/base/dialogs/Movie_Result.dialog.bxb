@@ -1,0 +1,13 @@
+dialog (Result) {
+  match: Movie(movie) {
+    from-output: FindMovie(action)
+  }
+  template-macro(MOVIE_RESULT) {
+    param (movie) {
+      expression (movie)
+    }
+    param (action) {
+      expression (action)
+    }
+  }
+}

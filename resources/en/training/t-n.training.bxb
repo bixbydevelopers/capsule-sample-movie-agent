@@ -1,0 +1,10 @@
+train (t-n2rqo5stiq5l7yvxzqcad7l98) {
+  utterance ("[g:Movie] Show me movies released in (2000)[v:time.DateTimeExpression]")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkpcsyy/RKMnNT9VwSS1JDgAzXioKi1OLizPw8BiYGRiBmAJKMDCDABMEA)
+  last-modified (1571879546299)
+}
+train (t-ne7lhzs2q09sd8d76hf7qe51a) {
+  utterance ("[g:Movie] Find (documentaries)[v:MovieGenre:Documentary]")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkZXHpc0/NK0plYGJgBGIGIMnIAAJMEAwA)
+  last-modified (1568847279864)
+}

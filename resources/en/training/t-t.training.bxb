@@ -1,0 +1,15 @@
+train (t-t1akkz438497p3x9wvfbceafb) {
+  utterance ([g:Movie,r:RunQuiz] Play the movie quiz)
+  plan (Y2BlkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkZXHpc0/NK0plkMIiHVSaF1iaWcUgjkUOLMHCwMjAxMAMpBmgLEYwCwSYgJiZgQEA)
+  last-modified (1568840789175)
+}
+train (t-t2jhtnx6yh0hqq2whs9865cko) {
+  utterance ("[g:Movie] find movies released in (2001)[v:time.DateTimeExpression] featuring (Emma Watson)[v:PersonName]")
+  plan (Y2BjkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkJbHIBqQWFefnMcji0IhHGiLll5ibyiBdllmmV5KZm6rnkliSGgJkuFYUFKUWF2cC9bIyMDIwMTAzsABZDFA2IxAygDEIMAMxWBYA)
+  last-modified (1571331178034)
+}
+train (t-tpezc67a2rh3vka5fkhfkxq4b) {
+  utterance ([g:Movie] Recommend some movies to watch)
+  plan (Y2BkkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZQIARRAAA)
+  last-modified (1568843718892)
+}

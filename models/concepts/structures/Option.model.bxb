@@ -1,0 +1,33 @@
+structure (Option) {
+  description(An option presented to the user for a multi choice question)
+  property (text) {
+    description ("Text description of the option")
+    type (core.Text)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (alias) {
+    description("Alias used for the option (e.g. first option 'A', second option 'B', etc)")
+    type (core.Text)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (match) {
+    description ("Accepted match pattern of the option")
+    type (core.Text)
+    min (Required) max (Many)
+    visibility (Private)
+  }
+  property (outcome) {
+    description("Outcome of the option")
+    type (core.Text)
+    min (Required) max (Many)
+    visibility (Private)
+  }
+  property (commentary) {
+    description ("Text commentary response of the option")
+    type (core.Text)
+    min (Required) max (One)
+    visibility (Private)
+  }
+}

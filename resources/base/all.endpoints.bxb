@@ -1,0 +1,27 @@
+endpoints {
+  action-endpoints {
+    action-endpoint (FetchMovieCredits) {
+      accepted-inputs (movie)
+      local-endpoint (FetchMovieCredits.js)
+    }
+    action-endpoint (FetchMovieDetails) {
+      accepted-inputs (movie)
+      local-endpoint (FetchMovieDetails.js)
+    }
+    action-endpoint (FindMovie) {
+      accepted-inputs (releaseDateTimeExpression, person, genre)
+      local-endpoint (FindMovie.js)
+    }
+    action-endpoint (FindPerson) {
+      accepted-inputs (name)
+      local-endpoint (FindPerson.js)
+    }
+    action-endpoint (InitializeQuiz) {
+      local-endpoint (InitializeQuiz.js)
+    }
+    action-endpoint (UpdateQuiz) {
+      accepted-inputs (quiz, answer)
+      local-endpoint (UpdateQuiz.js)
+    }
+  }
+}

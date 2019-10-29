@@ -1,0 +1,23 @@
+layout-macro-def (MOVIE_GENRE_SUMMARY) {
+  params {
+    param (genre) {
+      type (MovieGenre)
+      min (Required) max (One)
+    }
+  }
+  content {
+    cell-card {
+      slot2 {
+        content {
+          primary {
+            template-macro (MOVIE_GENRE_VALUE) {
+              param (genre) {
+                expression (genre)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

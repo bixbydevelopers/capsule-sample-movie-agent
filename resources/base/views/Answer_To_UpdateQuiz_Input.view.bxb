@@ -1,0 +1,79 @@
+input-view {
+  match: Answer(this) {
+    to-input: UpdateQuiz(action) {
+      from-input: Quiz(quiz) {
+        min (Required) max (One)
+      }
+    }
+  }
+    
+  message {
+    template-macro (QUIZ_UPDATE_PROMPT) {
+      param (quiz) {
+        expression (quiz)
+      }
+    }
+  }
+
+  render {
+    selection-of (action.quiz.questions[action.quiz.currentQuestion].options) {
+      navigation-mode {
+        if ($handsFree) {    
+          read-many {
+            page-size (5)
+            list-summary {
+              template-macro (QUIZ_UPDATE_PROMPT) {
+                param (quiz) {
+                  expression (quiz)
+                }
+              }
+            }
+            page-content (page) {
+              underflow-statement {
+                template-macro (HANDS_FREE_OPTION_UNDERFLOW_STATEMENT)
+              }
+              item-selection-question {
+                if (isFirstNavPage(page) && isLastNavPage(page)) { // There is only one page 
+                  template ("")
+                } else-if (!isLastNavPage(page)) {
+                  template-macro (HANDS_FREE_OPTION_ITEM_SELECTION_MORE_PAGES)
+                } else { // Last page
+                  template-macro (HANDS_FREE_OPTION_ITEM_SELECTION_LAST_PAGES)
+                }
+              }
+              overflow-statement {
+                template-macro (HANDS_FREE_OPTION_OVERFLOW_STATEMENT)
+              }
+              overflow-question {
+                template-macro (HANDS_FREE_OPTION_OVERFLOW_QUESTION)
+              }
+              page-marker {
+                if (!isFirstNavPage(page) && isLastNavPage(page)) {
+                  template-macro (HANDS_FREE_OPTION_LAST_OPTION) {
+                    param (page) {
+                      expression (page)
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      where-each (option) {
+        spoken-summary {
+          template ("#{value(option.alias)} ... #{value(option.text)}")
+        }
+        cell-card {
+          slot2 {
+            content {
+              primary {
+                template ("[#{value(option.alias)}. ]#{value(option.text)}")
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

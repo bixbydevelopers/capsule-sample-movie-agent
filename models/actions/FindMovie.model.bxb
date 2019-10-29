@@ -1,0 +1,58 @@
+action (FindMovie) {
+  description ("Find a movie")
+  type (Search)
+  collect {
+    input (releaseDateTimeExpression) {
+      description (Filter based on when the movie was released. Can be an interval or a punctual moment.)
+      type (time.DateTimeExpression)
+      min (Optional) max (One)
+      default-select {
+        with-rule {
+          select-first
+        }
+      }
+    }
+    input (person) {
+      description (Filter based on person's participation in the movie)
+      type (Person)
+      min (Optional) max (One)
+    }
+    input (genre) {
+      description (Filter based on movie genre)
+      type (MovieGenre)
+      min (Optional) max (One)
+      default-init {
+        if (!(exists(releaseDateTimeExpression) || exists(person))) {
+          intent {
+            goal-set: MovieGenre {
+              // Alphabetical order
+              MovieGenre (Action)
+              MovieGenre (Adventure)
+              MovieGenre (Animation)
+              MovieGenre (Comedy)
+              MovieGenre (Crime)
+              MovieGenre (Documentary)
+              MovieGenre (Drama)
+              MovieGenre (Family)
+              MovieGenre (Fantasy)
+              MovieGenre (History)
+              MovieGenre (Horror)
+              MovieGenre (Music)
+              MovieGenre (Mystery)
+              MovieGenre (Romance)
+              MovieGenre (ScienceFiction)
+              MovieGenre (Thriller)
+              MovieGenre (War)
+              MovieGenre (Western)
+            }
+          }
+        }
+      }
+    }
+  }
+  output (Movie) {
+    on-empty {
+      drop-contextual-inputs
+    }
+  }
+}

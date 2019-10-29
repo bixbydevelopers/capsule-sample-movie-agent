@@ -1,0 +1,84 @@
+result-view {
+	match {
+		Movie (results)
+	}
+	
+	render {
+		if (size(results) == 1) {
+			layout-macro (MOVIE_DETAILS) {
+				param (movie) {
+					expression (results)
+				}
+			}
+		} else-if (size(results) > 1) {
+			list-of (results) {
+				navigation-mode { 
+					if ($handsFree) {
+						read-one {
+							with-navigation-conversation-drivers
+							list-summary {
+								template ("#{event(results, 'Result')}")
+							}
+							page-content {
+								item-selection-question {
+									template-macro (HANDS_FREE_MOVIE_ITEM_SELECTION_QUESTION)
+								}
+								overflow-statement {
+									template-macro (HANDS_FREE_MOVIE_OVERFLOW_STATEMENT)
+								}
+								overflow-question {
+									template-macro (HANDS_FREE_MOVIE_OVERFLOW_QUESTION)
+								}
+								underflow-statement {
+									template-macro (HANDS_FREE_MOVIE_UNDERFLOW_STATEMENT)
+								}
+							}
+						}
+					}
+				}
+				has-details (true)
+				highlights {
+					select (pick) {
+						label {
+							template-macro (MOVIE_HIGHLIGHT_LABEL)
+						}
+						layout-macro (MOVIE_HIGHLIGHT) {
+							param (movie) {
+								expression (pick)
+							}
+						}
+						summary {
+							template-macro (HANDS_FREE_MOVIE_HIGHLIGHT_SUMMARY) {
+								param (movie) {
+									expression (pick)
+								}
+							}
+						}
+					}
+				}
+				where-each (result) {
+					if ($handsFree) {
+						layout-macro (MOVIE_HIGHLIGHT) {
+							param (movie) {
+								expression (result)
+							}
+						}
+					} else {
+						layout-macro (MOVIE_SUMMARY) {
+							param (movie) {
+								expression (result)
+							}
+						}
+					}
+					spoken-summary {
+						template-macro (HANDS_FREE_MOVIE_NORMAL_SUMMARY) {
+							param (movie) {
+								expression (result)
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,24 @@
+layout-macro-def (PERSON_SUMMARY) {
+  params {
+    param (person) {
+      type (Person)
+      min (Required) max (One)
+    }
+  }
+  content {
+    thumbnail-card {
+      image-url ("[#{value(person.profileUrl)}]")
+      image-aspect-ratio (3:4)
+      image-object-fit (Contain)
+      image-position (Start)
+      title-area {
+        slot1 {
+          text {
+            value ("#{value(person.name)}")
+            style (Title_M)
+          }
+        }
+      }
+    }
+  }
+}

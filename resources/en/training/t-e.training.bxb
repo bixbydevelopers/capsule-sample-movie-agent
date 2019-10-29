@@ -1,0 +1,15 @@
+train (t-e4zeq86vny42svu68p1q7k8w7) {
+  utterance ("[g:Answer:prompt] (A)[v:Answer]")
+  plan (Y2BikEytSMwtyEnVy80vy0x1TE/NK9FzzCsuTy3CJ8UIhAwMPEDMBMRANgA=)
+  last-modified (1566772294135)
+}
+train (t-emy3u1vgtbyjwiebizmkpsh2s) {
+  utterance ("[g:Movie:continue] Filter to show only movies released (after Halloween 2015)[v:time.DateTimeExpression]")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkpcsyy/RKMnNT9VwSS1JDgAzXioKi1OLizPw8BiYGRiBmAJKMDCDABMEA)
+  last-modified (1568843557322)
+}
+train (t-evjpwo5t3xcg0wx3uco64yqg8) {
+  utterance ("[g:Movie] What movies did (Robert Downey Jr)[v:PersonName] star in in the (last decade)[v:time.DateTimeExpression]?")
+  plan (Y2BjkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkJbHIBqQWFefnMcji0IhHGiLll5ibyiBdllmmV5KZm6rnkliSGgJkuFYUFKUWF2cC9bIyMDIwMTAzsABZDFA2IxAygDEIMAMxWBYA)
+  last-modified (1570656657012)
+}

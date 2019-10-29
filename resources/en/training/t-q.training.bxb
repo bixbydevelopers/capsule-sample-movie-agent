@@ -1,0 +1,25 @@
+train (t-q6umglykldsjuw9h9timypmeg) {
+  utterance ("[g:Movie] What movies came out in (fall 2017)[v:time.DateTimeExpression]")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkpcsyy/RKMnNT9VwSS1JDgAzXioKi1OLizPw8BiYGRiBmAJKMDCDABMEA)
+  last-modified (1568917350183)
+}
+train (t-q7bs7qzhr9fybjch20pns1gjb) {
+  utterance ("[g:Movie] Find a (fantasy)[v:MovieGenre:Fantasy] movie")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkZXHpc0/NK0plYGJgBGIGIMnIAAJMEAwA)
+  last-modified (1568841426340)
+}
+train (t-qhvj0z14h5w21bq1grejc9y9w) {
+  utterance ("[g:Answer:prompt] (word)[v:Answer]")
+  plan (Y2BikEytSMwtyEnVy80vy0x1TE/NK9FzzCsuTy3CJ8UIhAwMPEDMBMRANgA=)
+  last-modified (1566775878433)
+}
+train (t-qnp5urwchr8sif42ctn42g5ps) {
+  utterance ("[g:Movie] What (Action)[v:MovieGenre:Action] movies came out in (fall 2017)[v:time.DateTimeExpression]?")
+  plan (Y2BhkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkZXHpc0/NK0plkC7LLNMrycxN1XNJLEkNATJcKwqKUouLM/PzGJgZGBmYgCQDkAZBCADxwaIA)
+  last-modified (1568917433610)
+}
+train (t-qyn8x84wnryiiotru4e18qup1) {
+  utterance ("[g:Movie] Show me movies by (Francis Ford Coppola)[v:PersonName]")
+  plan (Y2BlkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkJbHIBqQWFefnMcji0IhHGiLll5ibysDCwMjAxMAMpBmgLEYwCwSYgBgoDgA=)
+  last-modified (1572035034783)
+}

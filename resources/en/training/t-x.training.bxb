@@ -1,0 +1,10 @@
+train (t-xda74199pos5s9z7q9a9h6zhy) {
+  utterance ("[g:Movie] Look for a (sci-fi)[v:MovieGenre:ScienceFiction] movie made (before January 1995)[v:time.DateTimeExpression] ")
+  plan (Y2BhkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkZXHpc0/NK0plkC7LLNMrycxN1XNJLEkNATJcKwqKUouLM/PzGJgZGBmYgCQDkAZBCADxwaIA)
+  last-modified (1568841430700)
+}
+train (t-xnweox5ly6cip5scd09l44bue) {
+  utterance ("[g:Answer:prompt] (A length four answer)[v:Answer]")
+  plan (Y2BikEytSMwtyEnVy80vy0x1TE/NK9FzzCsuTy3CJ8UIhAwMPEDMBMRANgA=)
+  last-modified (1566776027850)
+}

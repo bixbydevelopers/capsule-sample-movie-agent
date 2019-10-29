@@ -1,0 +1,28 @@
+structure (MovieDetails) {
+  description ("Movie details")
+  property (budget) {
+    type (core.Integer)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (overview) {
+    type (core.Text)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (revenue) {
+    type (core.Integer)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (runtime) {
+    type (time.Period)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+  property (tagline) {
+    type (core.Text)
+    min (Optional) max (One)
+    visibility (Private)
+  }
+}

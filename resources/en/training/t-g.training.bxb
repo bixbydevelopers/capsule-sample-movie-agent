@@ -1,0 +1,5 @@
+train (t-gcz5teiqqlrow6sc6w0im4kjd) {
+  utterance ("[g:Movie:continue] Only show movies that came out (last month)[v:time.DateTimeExpression]")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkpcsyy/RKMnNT9VwSS1JDgAzXioKi1OLizPw8BiYGRiBmAJKMDCDABMEA)
+  last-modified (1568841659392)
+}

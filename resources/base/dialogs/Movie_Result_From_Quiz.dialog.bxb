@@ -1,0 +1,21 @@
+dialog (Result) {
+  // This match pattern is for the situation where the chosen MovieGenre was the result of taking the movie quiz.
+  match: Movie(movie) {
+    from-output: FindMovie(action) {
+      from-input: MovieGenre {
+        from-output: RunQuiz
+      }
+    }
+  }
+  template-macro(MOVIE_RESULT) {
+    param (movie) {
+      expression (movie)
+    }
+    param (action) {
+      expression (action)
+    }
+    param (fromQuiz) {
+      expression (true)
+    }
+  }
+}

@@ -1,0 +1,7 @@
+action (InitializeQuiz) {
+  description (Initializes the quiz)
+  type (Constructor)
+  collect {
+  }
+  output (Quiz)
+}

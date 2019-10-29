@@ -1,0 +1,5 @@
+train (t-jext5f9ubrskvoiwa8cwm25d2) {
+  utterance ("[g:Movie] What movies did (xavier dolan)[v:PersonName] work on (last year)[v:time.DateTimeExpression]?")
+  plan (Y2BjkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkJbHIBqQWFefnMcji0IhHGiLll5ibyiBdllmmV5KZm6rnkliSGgJkuFYUFKUWF2cC9bIyMDIwMTAzsABZDFA2IxAygDEIMAMxWBYA)
+  last-modified (1568916748239)
+}

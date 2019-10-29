@@ -1,0 +1,5 @@
+train (t-4zf5pms5ft6o0inmst20ez2yg) {
+  utterance ("[g:Movie] Find a (1999)[v:time.DateTimeExpression] (science fiction)[v:MovieGenre:ScienceFiction] movie")
+  plan (Y2BhkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkZXHpc0/NK0plkC7LLNMrycxN1XNJLEkNATJcKwqKUouLM/PzGJgZGBmYgCQDkAZBCADxwaIA)
+  last-modified (1568840733930)
+}

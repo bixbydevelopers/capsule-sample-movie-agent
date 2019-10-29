@@ -1,0 +1,7 @@
+hints {
+  uncategorized {
+    hint (Ask Movie Agent to help me choose a movie)
+    hint (With Movie Agent, find a science-fiction movie)
+    hint (Using Movie Agent, recommend a movie from last year)
+  }
+}

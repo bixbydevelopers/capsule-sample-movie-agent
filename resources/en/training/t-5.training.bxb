@@ -1,0 +1,5 @@
+train (t-5lo49hfmmg0mmao46mfktm16h) {
+  utterance ("[g:MovieGenre:prompt] (Western)[v:MovieGenre:Western]")
+  plan (Y2BikE2tSMwtyEnVy80vy0x1TE/NK9HzBTHdU/OKUglJMwIhAwMPEDMBMZANAA==)
+  last-modified (1566863371052)
+}

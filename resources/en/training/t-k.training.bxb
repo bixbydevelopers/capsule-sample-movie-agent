@@ -1,0 +1,15 @@
+train (t-k9gx93t3hfq83b7omammch9po) {
+  utterance ("[g:Answer:prompt] (Two terms)[v:Answer]")
+  plan (Y2BikEytSMwtyEnVy80vy0x1TE/NK9FzzCsuTy3CJ8UIhAwMPEDMBMRANgA=)
+  last-modified (1566775991247)
+}
+train (t-kgwpjfcwdur4pe4me69a7081l) {
+  utterance ("[g:Answer:prompt] (An answer with 5 words)[v:Answer]")
+  plan (Y2BikEytSMwtyEnVy80vy0x1TE/NK9FzzCsuTy3CJ8UIhAwMPEDMBMRANgA=)
+  last-modified (1566775971806)
+}
+train (t-kurto7xgyun7gwwppakxx4x0k) {
+  utterance ("[g:Movie] Find movies by (James Cameron)[v:PersonName]")
+  plan (Y2BlkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkJbHIBqQWFefnMcji0IhHGiLll5ibysDCwMjAxMAMpBmgLEYwCwSYgBgoDgA=)
+  last-modified (1568916986439)
+}

@@ -1,0 +1,11 @@
+action (FindPerson) {
+  description ("Find a person in the movie industry")
+  type (Search)
+  collect {
+    input (name) {
+      type (PersonName)
+      min (Required) max (One)
+    }
+  }
+  output (Person)
+}

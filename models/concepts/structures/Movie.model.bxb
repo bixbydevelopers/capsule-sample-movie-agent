@@ -1,0 +1,31 @@
+structure (Movie) {
+  description ("A movie")
+  property (title) {
+    type (MovieTitle)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (releaseDate) {
+    type (time.Date)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (genre) {
+    type (MovieGenre)
+    min (Optional) max (Many)
+    visibility (Private)
+  }
+  property (posterUrl) {
+    type (core.Text)
+    visibility (Private)
+  }
+  property (backdropUrl) {
+    type (core.Text)
+    visibility (Private)
+  }
+  property (movieDetails) {
+    type (MovieDetails)
+    visibility (Private)
+    lazy-source (FetchMovieDetails)
+  }
+}

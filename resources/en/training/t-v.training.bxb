@@ -1,0 +1,10 @@
+train (t-voljevbqhqk263f1vhhp6iaq6) {
+  utterance ("[g:Movie] What's the (2001)[v:time.DateTimeExpression] movie with (Audrey Tautou)[v:PersonName]")
+  plan (Y2BjkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkJbHIBqQWFefnMcji0IhHGiLll5ibyiBdllmmV5KZm6rnkliSGgJkuFYUFKUWF2cC9bIyMDIwMTAzsABZDFA2IxAygDEIMAMxWBYA)
+  last-modified (1568916849719)
+}
+train (t-vpnyjr3apfdrlusq3akadj79t) {
+  utterance ("[g:Movie] Find (fantasy)[v:MovieGenre:Fantasy] movies")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkZXHpc0/NK0plYGJgBGIGIMnIAAJMEAwA)
+  last-modified (1568846933653)
+}

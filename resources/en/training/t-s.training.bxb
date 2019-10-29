@@ -1,0 +1,10 @@
+train (t-sdaesn18ctzjc6i7aqibycll5) {
+  utterance ("[g:Movie] find movies released in (2019)[v:time.DateTimeExpression]")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkpcsyy/RKMnNT9VwSS1JDgAzXioKi1OLizPw8BiYGRiBmAJKMDCDABMEA)
+  last-modified (1571331180802)
+}
+train (t-si6jw48gsjoekkkqvlqfd7juo) {
+  utterance ([g:MovieGenre:prompt,r:RunQuiz] Help me choose)
+  plan (Y2BmkE2tSMwtyEnVy80vy0x1TE/NK9HzBTHdU/OKUhmksEgHleYFlmZWMYhjkQNLMDEwAjEDkGRkAAEImwEA)
+  last-modified (1566508224671)
+}

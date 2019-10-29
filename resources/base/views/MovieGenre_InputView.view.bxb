@@ -1,0 +1,44 @@
+input-view {
+  match: MovieGenre (candidates)
+  message {
+    template-macro (MOVIE_GENRE_SELECTION_PROMPT)
+  }
+  render {
+    selection-of (candidates) {
+      where-each (candidate) {
+        layout-macro (MOVIE_GENRE_SUMMARY) {
+          param (genre) {
+            expression (candidate)
+          }
+        }
+      }
+      highlights {
+        select (pick) {
+          summary {
+            template-macro (MOVIE_GENRE_HIGHLIGHT_SPOKEN_SUMMARY) {
+              param (movieGenre) {
+                expression (pick)
+              }
+            }
+          }
+          label {
+            template-macro (MOVIE_GENRE_HIGHLIGHT_LABEL_TODAY)
+          }
+          layout-macro (MOVIE_GENRE_SUMMARY) {
+            param (genre) {
+              expression (pick)
+            }
+          }
+          // Distribute the 8 genres that can appeal to general audiences across different days
+          filter-by (now().date.day % 8 == 0 ? pick == 'Mystery' : now().date.day % 8 == 1 ? pick == 'Adventure' : now().date.day % 8 == 2 ? pick == 'Action' : now().date.day % 8 == 3 ? pick == 'Fantasy' : now().date.day % 8 == 4 ? pick == 'ScienceFiction' : now().date.day % 8 == 5 ? pick == 'Comedy' : now().date.day % 8 == 6 ? pick == 'Documentary' : pick == 'Music')
+        }
+      }
+    }
+  }
+  conversation-drivers {
+    conversation-driver {
+      
+      template-macro (PLAY_GENRE_QUIZ_CONVO_DRIVER)
+    }
+  }
+}

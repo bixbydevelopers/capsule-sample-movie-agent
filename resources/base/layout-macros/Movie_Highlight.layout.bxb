@@ -1,0 +1,32 @@
+layout-macro-def (MOVIE_HIGHLIGHT) {
+  params {
+    param (movie) {
+      type (Movie)
+      min (Required) max (One)
+    }
+  }
+  content {
+    thumbnail-card {
+      image-url ("[#{value(movie.posterUrl)}]")
+      image-aspect-ratio (3:4)
+      image-object-fit (Contain)
+      image-position (Start)
+      title-area {
+        slot1 {
+          text {
+            value ("#{value(movie.title)}")
+            style (Title_M)
+          }
+        }
+        slot2 {
+          single-line {
+            text {
+              value ("#{value(movie.releaseDate.year)}")
+              style (Detail_L_Soft)
+            }
+          }
+        }
+      }
+    }
+  }
+}

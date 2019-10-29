@@ -1,0 +1,20 @@
+structure (Question) {
+  description (A question in a quiz)
+  property (text) {
+    description(Question to be displayed)
+    type (core.Text)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (options) {
+    description(Options provided to the user)
+    type (Option)
+    min (Optional) max (Many)
+    visibility (Private)
+  }
+  property (selectedOption) {
+    description (Index of the user selected option)
+    type (core.Integer)
+    min (Optional) max (One)
+  }
+}

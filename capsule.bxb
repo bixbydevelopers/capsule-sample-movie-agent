@@ -1,0 +1,28 @@
+capsule {
+  id (example.movieAgent)
+  version (1.0.0)
+  format (3)
+  targets {
+    target (bixby-mobile-en-US)
+    target (bixby-tv-en-US)
+    target (bixby-watch-en-US)
+    target (bixby-fridge-en-US)
+  }
+  capsule-imports {
+    import (viv.core) {
+      as (core)
+    }
+    import (viv.time) {
+      as (time)
+      version (3.0.23)
+    }
+  }
+  runtime-flags {
+    concepts-inherit-super-type-features
+    modern-prompt-rejection
+    modern-default-view-behavior
+    support-halt-effect-in-computed-inputs
+    no-filtering-with-validation
+    use-input-views-for-selection-list-detail
+  }
+}

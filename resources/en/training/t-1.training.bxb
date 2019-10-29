@@ -1,0 +1,5 @@
+train (t-17jqp6392hi91cpvl93ayv4gz) {
+  utterance ("[g:Movie] Recommend a movie from (last year)[v:time.DateTimeExpression]")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkpcsyy/RKMnNT9VwSS1JDgAzXioKi1OLizPw8BiYGRiBmAJKMDCDABMEA)
+  last-modified (1568917282009)
+}

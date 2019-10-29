@@ -1,0 +1,15 @@
+train (t-20i42xxffljlpd85lbgh249hb) {
+  utterance ("[g:Movie] Find movies with (Jackie Chan)[v:PersonName]")
+  plan (Y2BlkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkJbHIBqQWFefnMcji0IhHGiLll5ibysDCwMjAxMAMpBmgLEYwCwSYgBgoDgA=)
+  last-modified (1568913652316)
+}
+train (t-2fqyoiu5kee59v4aveu40uzfy) {
+  utterance ([g:Movie] Find a movie)
+  plan (Y2BkkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZQIARRAAA)
+  last-modified (1568840723278)
+}
+train (t-2n7fzzvzu19joce611guluiub) {
+  utterance ("[g:Movie] Find a (2010)[v:time.DateTimeExpression] movie")
+  plan (Y2BmkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkpcsyy/RKMnNT9VwSS1JDgAzXioKi1OLizPw8BiYGRiBmAJKMDCDABMEA)
+  last-modified (1568917286458)
+}

@@ -1,0 +1,53 @@
+input-view {
+  match: Person (candidates) {
+    from-output: FindPerson {
+      from-input: PersonName(name)
+    }
+  }
+  message {
+    template-macro (PERSON_SELECTION_PROMPT)
+  }
+  render {
+    selection-of (candidates) {
+      navigation-mode {
+        if ($handsFree) {
+          read-one {
+            with-navigation-conversation-drivers
+            list-summary {
+              template-macro (HANDS_FREE_PERSON_LIST_SUMMARY) {
+                param (name) {
+                  expression (name)
+                }
+              }
+            }
+            page-content {
+              item-selection-question {
+                template-macro (HANDS_FREE_PERSON_ITEM_SELECTION_QUESTION)
+              }
+              overflow-statement {
+                template-macro (HANDS_FREE_PERSON_OVERFLOW_STATEMENT)
+              }
+              overflow-question {
+                template-macro (HANDS_FREE_PERSON_OVERFLOW_QUESTION)
+              }
+              underflow-statement {
+                template-macro (HANDS_FREE_PERSON_UNDERFLOW_STATEMENT)
+              }
+            }
+          }
+        }
+      }
+
+      where-each (candidate) {
+        layout-macro (PERSON_SUMMARY) {
+          param (person) {
+            expression (candidate)
+          }
+        }
+        spoken-summary {
+          template ("#{value(candidate.name)}")
+        }
+      }
+    }
+  }
+}

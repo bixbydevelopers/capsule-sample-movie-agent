@@ -1,0 +1,30 @@
+action (RunQuiz) {
+  description (Initialize quiz, then keep prompting questions until quiz is completed.)
+  type (Constructor)
+  collect {
+    input (quiz) {
+      type (Quiz)
+      min (Required) max (One)
+      default-init {
+        intent {
+          goal: InitializeQuiz
+        }
+      }
+      validate {
+        if (!quiz.completed) {
+          replan {
+            intent {
+              goal: UpdateQuiz
+              value { $expr(quiz) }
+            }
+          }
+        }
+      }
+    }
+  }
+  output (MovieGenre) {
+    evaluate {
+      $expr (quiz.finalOutcome)
+    }
+  }
+}

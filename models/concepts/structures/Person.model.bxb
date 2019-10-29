@@ -1,0 +1,12 @@
+structure (Person) {
+  description ("A person in the movie industry (actor, producer, etc)")
+  property (name) {
+    type (PersonName)
+    min (Required) max (One)
+    visibility (Private)
+  }
+  property (profileUrl) {
+    type (core.Text)
+    visibility (Private)
+  }
+}

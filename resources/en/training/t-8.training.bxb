@@ -1,0 +1,15 @@
+train (t-84mwqzp2gvwygh1lbym19qa1v) {
+  utterance ([g:Movie] What movie should I watch?)
+  plan (Y2BkkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZQIARRAAA)
+  last-modified (1568843689182)
+}
+train (t-86r18wc3sjvh1otkrsbdc75f8) {
+  utterance ("[g:Movie] What movies feature (Emma Watson)[v:PersonName]?")
+  plan (Y2BlkEitSMwtyEnVy80vy0x1TE/NK9HzBTEZZLDIuGXmpUBkJbHIBqQWFefnMcji0IhHGiLll5ibysDCwMjAxMAMpBmgLEYwCwSYgBgoDgA=)
+  last-modified (1568914199807)
+}
+train (t-8p5xupdngnh25162y49js46wi) {
+  utterance ("[g:Answer:prompt] (I think the answer is bananas)[v:Answer]")
+  plan (Y2BikEytSMwtyEnVy80vy0x1TE/NK9FzzCsuTy3CJ8UIhAwMPEDMBMRANgA=)
+  last-modified (1566776202991)
+}

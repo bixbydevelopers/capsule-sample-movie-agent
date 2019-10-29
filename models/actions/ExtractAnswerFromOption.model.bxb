@@ -1,0 +1,15 @@
+action (ExtractAnswerFromOption) {
+  description (Convert an option - the option user tapped on - to a (text) answer)
+  type (Constructor)
+  collect {
+    input (option) {
+      type (Option)
+      min (Required) max (One)
+    }
+  }
+  output (Answer) {
+    evaluate {
+      $expr(option.alias)
+    }
+  }
+}

@@ -1,0 +1,12 @@
+capsule-info {
+  description (Watching movies is a way to travel to new worlds. This Capsule is like a travel agent to help you find your next movie adventure.)
+  developer-name (Bixby)
+  dispatch-name (Movie Agent)
+  display-name (Movie Agent)
+  icon-asset (tmdbLogo.png)
+  search-keywords {
+    keyword (movie)
+  }
+  terms-url (https://www.themoviedb.org/terms-of-use)
+  website-url (https://www.themoviedb.org)
+}

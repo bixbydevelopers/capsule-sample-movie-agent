@@ -1,0 +1,11 @@
+action (FetchMovieDetails) {
+  description ("Fetch additional movie details lazily from a secondary endpoint")
+  type (Fetch)
+  collect {
+    input (movie) {
+      type (Movie)
+      min (Required) max (One)
+    }
+  }
+  output (MovieDetails)
+}

@@ -1,0 +1,15 @@
+action (UpdateQuiz) {
+  type (Constructor)
+  description (Collect user answer, match with available options, record outcome and move to the next question)
+  collect {
+    input (answer) {
+      type (Answer)
+      min (Required) max (One)
+    }
+    input (quiz) {
+      type (Quiz)
+      min (Required) max (One)
+    }
+  }
+  output (Quiz)
+}
