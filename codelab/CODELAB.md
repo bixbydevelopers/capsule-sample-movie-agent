@@ -10,8 +10,8 @@ file](../README.md) to get familiar with this Capsule and run a few queries.
 ## Puzzles
 
 ### Newcomer
-- [The Quiz Show](./puzzles/newcomer/the-quiz-show.md)
 - [Yer A Wizard](./puzzles/newcomer/yer-a-wizard.md)
+- [The Quiz Show](./puzzles/newcomer/the-quiz-show.md)
 
 ### Beginner
 - [Jedi In Training](./puzzles/beginner/jedi-in-training.md)
