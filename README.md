@@ -1,4 +1,8 @@
-# Movie Agent
+<p align="Center">
+  <img src="https://bixbydevelopers.com/dev/docs-assets/resources/dev-guide/bixby_logo_github-11221940070278028369.png">
+  <br/>
+  <h1 align="Center">Bixby Movie Agent Sample Capsule</h1>
+</p>
 
 Watching movies is a way to travel to new worlds.
 This Capsule is like a travel agent to help you find your next movie adventure.
