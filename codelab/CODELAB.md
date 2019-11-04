@@ -30,12 +30,3 @@ Yer A Wizard)*
 ### Challenge
 - [El Niño](./puzzles/challenge/el-nino.md) *(Depends on Blue Steel)*
 - [To Infinity And Beyond](./puzzles/challenge/to-infinity-and-beyond.md)
-
-## SDC 2019 Code Lab
-
-The 2019 Samsung Developer Conference will feature a Code Lab area with
-computers where you can play with these puzzles. This is a great occasion to try
-out Bixby, learn new skills and win prizes!
-
-- 1 stamp per person per puzzle
-- Must show best effort in completing the puzzle
