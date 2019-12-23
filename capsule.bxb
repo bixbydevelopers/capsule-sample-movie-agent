@@ -14,17 +14,10 @@ capsule {
     }
     import (viv.time) {
       as (time)
-      version (3.1.13)
+      version (3.1.48)
     }
   }
-  runtime-flags {
-    concepts-inherit-super-type-features
-    modern-prompt-rejection
-    modern-default-view-behavior
-    support-halt-effect-in-computed-inputs
-    no-filtering-with-validation
-    use-input-views-for-selection-list-detail
-  }
+  runtime-version (2)
   store-countries {
     all
   }
