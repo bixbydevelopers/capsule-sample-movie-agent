@@ -4,7 +4,8 @@ action (RunQuiz) {
   collect {
     input (quiz) {
       type (Quiz)
-      min (Required) max (One)
+      min (Required)
+      max (One)
       default-init {
         intent {
           goal: InitializeQuiz
@@ -15,7 +16,9 @@ action (RunQuiz) {
           replan {
             intent {
               goal: UpdateQuiz
-              value { $expr(quiz) }
+              value {
+                $expr (quiz)
+              }
             }
           }
         }

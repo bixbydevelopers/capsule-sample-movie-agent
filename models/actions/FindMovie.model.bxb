@@ -5,7 +5,8 @@ action (FindMovie) {
     input (releaseDateTimeExpression) {
       description (Filter based on when the movie was released. Can be an interval or a punctual moment.)
       type (time.DateTimeExpression)
-      min (Optional) max (One)
+      min (Optional)
+      max (One)
       default-select {
         with-rule {
           select-first
@@ -15,12 +16,14 @@ action (FindMovie) {
     input (person) {
       description (Filter based on person's participation in the movie)
       type (Person)
-      min (Optional) max (One)
+      min (Optional)
+      max (One)
     }
     input (genre) {
       description (Filter based on movie genre)
       type (MovieGenre)
-      min (Optional) max (One)
+      min (Optional)
+      max (One)
       default-init {
         if (!(exists(releaseDateTimeExpression) || exists(person))) {
           intent {

@@ -4,12 +4,13 @@ action (ExtractAnswerFromOption) {
   collect {
     input (option) {
       type (Option)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   output (Answer) {
     evaluate {
-      $expr(option.alias)
+      $expr (option.alias)
     }
   }
 }

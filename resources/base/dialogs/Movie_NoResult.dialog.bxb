@@ -1,8 +1,8 @@
 dialog (NoResult) {
-  match: Movie(movie) {
-    from-output: FindMovie(action)
+  match: Movie (movie) {
+    from-output: FindMovie (action)
   }
-  template-macro(MOVIE_NO_RESULT) {
+  template-macro (MOVIE_NO_RESULT) {
     param (movie) {
       expression (movie)
     }

@@ -2,7 +2,8 @@ layout-macro-def (MOVIE_HIGHLIGHT) {
   params {
     param (movie) {
       type (Movie)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {

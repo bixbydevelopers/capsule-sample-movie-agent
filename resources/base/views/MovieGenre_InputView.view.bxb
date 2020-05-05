@@ -37,7 +37,6 @@ input-view {
   }
   conversation-drivers {
     conversation-driver {
-      
       template-macro (PLAY_GENRE_QUIZ_CONVO_DRIVER)
     }
   }

@@ -4,7 +4,8 @@ action (FindPerson) {
   collect {
     input (name) {
       type (PersonName)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   output (Person)

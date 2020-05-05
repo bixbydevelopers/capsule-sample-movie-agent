@@ -4,7 +4,8 @@ action (FetchMovieCredits) {
   collect {
     input (movie) {
       type (Movie)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   output (core.Text)

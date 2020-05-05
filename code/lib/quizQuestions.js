@@ -61,12 +61,10 @@ var movieGenreMap = require('./movieGenreMap.js')
  * }
  * 
  **/
- 
-module.exports = [
-  {
+
+module.exports = [{
     question: "What type of traveler are you?",
-    options: [
-      {
+    options: [{
         text: "Sleeping in the woods, Wi-Fi optional",
         match: ["sleeping", "woods", "wi[-\s]fi"],
         outcome: [movieGenreMap.Action.bxb, movieGenreMap.Adventure.bxb, movieGenreMap.Horror.bxb, movieGenreMap.Thriller.bxb],
@@ -82,8 +80,7 @@ module.exports = [
   },
   {
     question: "We can get you first class seats! The cabin crew would like to know how you prefer your steak.",
-    options: [
-      {
+    options: [{
         text: "Well-done",
         match: ["well[-\s]done"],
         outcome: [movieGenreMap.History.bxb, movieGenreMap.Western.bxb],
@@ -101,16 +98,17 @@ module.exports = [
         outcome: [movieGenreMap.Crime.bxb, movieGenreMap.Horror.bxb, movieGenreMap.War.bxb],
         commentary: "Bloody."
       },
-      { text: "No meat please",
+      {
+        text: "No meat please",
         match: ["no meat", "vegetarian", "vegan"],
         outcome: [movieGenreMap.Documentary.bxb],
-        commentary: "No problem! We have plenty of Impossible Burgers."}
+        commentary: "No problem! We have plenty of Impossible Burgers."
+      }
     ],
   },
   {
     question: "Your friend wants to go bungee jumping on the trip. What do you say?",
-    options: [
-      {
+    options: [{
         text: "Yes! When?",
         match: ["yes", "yeah", "sure", "of course", "when"],
         outcome: [movieGenreMap.Action.bxb, movieGenreMap.Adventure.bxb, movieGenreMap.Thriller.bxb, movieGenreMap.War.bxb, movieGenreMap.Western.bxb, movieGenreMap.ScienceFiction.bxb],
@@ -132,8 +130,7 @@ module.exports = [
   },
   {
     question: "Where would you prefer to sit on your movie adventure?",
-    options: [
-      {
+    options: [{
         text: "Window seat",
         match: ["window"],
         outcome: [movieGenreMap.Adventure.bxb, movieGenreMap.Action.bxb],
@@ -147,10 +144,9 @@ module.exports = [
       },
     ],
   },
-    {
+  {
     question: "What snack would you like for the trip?",
-    options: [
-      {
+    options: [{
         text: "Popcorn",
         match: ["popcorn"],
         outcome: [movieGenreMap.Thriller.bxb, movieGenreMap.Action.bxb],
@@ -178,8 +174,7 @@ module.exports = [
   },
   {
     question: "Will your kids be joining you on this trip?",
-    options: [
-      {
+    options: [{
         text: "Yes",
         match: ["yes", "yeah", "yep", "yup", "sure", "of course", "maybe", "probably", "definitely"],
         outcome: [movieGenreMap.Animation.bxb, movieGenreMap.Family.bxb],
@@ -195,8 +190,7 @@ module.exports = [
   },
   {
     question: "Which historical figure would you prefer as a weekend travel companion?",
-    options: [
-      {
+    options: [{
         text: "Teddy Roosevelt, a former US president",
         match: ["teddy", "theodore", "roosevelt", "president"],
         outcome: [movieGenreMap.Adventure.bxb, movieGenreMap.Western.bxb],
@@ -224,8 +218,7 @@ module.exports = [
   },
   {
     question: "There's a chance of rain in the forecast. How do you like to spend time indoors?",
-    options: [
-      {
+    options: [{
         text: "Solving puzzles and reading",
         match: ["puzzles", "reading"],
         outcome: [movieGenreMap.Crime.bxb, movieGenreMap.Documentary.bxb, movieGenreMap.Mystery.bxb],
@@ -247,8 +240,7 @@ module.exports = [
   },
   {
     question: "What type of book are you bringing with you for the trip?",
-    options: [
-      {
+    options: [{
         text: "A high fantasy used paperback",
         match: ["fantasy", "used", "paperback"],
         outcome: [movieGenreMap.Drama.bxb, movieGenreMap.Fantasy.bxb, movieGenreMap.Music.bxb, movieGenreMap.Romance.bxb],
@@ -276,8 +268,7 @@ module.exports = [
   },
   {
     question: "Are you a night owl or an early bird?",
-    options: [
-      {
+    options: [{
         text: "Night owl. I'll sleep when I'm dead.",
         match: ["night", "owl", "dead"],
         outcome: [movieGenreMap.Crime.bxb, movieGenreMap.Horror.bxb, movieGenreMap.Mystery.bxb, movieGenreMap.Thriller.bxb],

@@ -8,17 +8,20 @@ template-macro-def (MOVIE_FROM_FINDMOVIE_CONCEPT) {
   params {
     param (movie) {
       type (Movie)
-      min (Optional) max (Many)
+      min (Optional)
+      max (Many)
     }
     param (action) {
       type (FindMovie)
-      min (Optional) max (One)
+      min (Optional)
+      max (One)
     }
   }
   content {
     if (size(movie) == 1) {
       template ("[#{lower(macro('MOVIE_GENRE_VALUE', action.genre))}] movie[ released #{macro('RELEASE_DATE_TIME_EXPRESSION_VALUE', action.releaseDateTimeExpression)}][ with #{value(action.person.name)}]")
-    } else {
+    }
+    else {
       template ("[#{lower(macro('MOVIE_GENRE_VALUE', action.genre))}] movies[ released #{macro('RELEASE_DATE_TIME_EXPRESSION_VALUE', action.releaseDateTimeExpression)}][ with #{value(action.person.name)}]")
     }
   }
@@ -46,29 +49,66 @@ template-macro-def (MOVIE_GENRE_VALUE) {
   params {
     param (genre) {
       type (MovieGenre)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
     switch (genre) {
-      case (Horror) { template("Horror") }
-      case (Thriller) { template("Thriller") }
-      case (Mystery) { template("Mystery") }
-      case (Crime) { template("Crime") }
-      case (Adventure) { template("Adventure") }
-      case (Action) { template("Action") }
-      case (Fantasy) { template("Fantasy") }
-      case (ScienceFiction) { template("Science Fiction") }
-      case (Family) { template("Family") }
-      case (Animation) { template("Animation") }
-      case (Comedy) { template("Comedy") }
-      case (Romance) { template("Romance") }
-      case (Western) { template("Western") }
-      case (Drama) { template("Drama") }
-      case (History) { template("History") }
-      case (War) { template("War") }
-      case (Documentary) { template("Documentary") }
-      case (Music) { template("Music") }    
+      case (Horror) {
+        template ("Horror")
+      }
+      case (Thriller) {
+        template ("Thriller")
+      }
+      case (Mystery) {
+        template ("Mystery")
+      }
+      case (Crime) {
+        template ("Crime")
+      }
+      case (Adventure) {
+        template ("Adventure")
+      }
+      case (Action) {
+        template ("Action")
+      }
+      case (Fantasy) {
+        template ("Fantasy")
+      }
+      case (ScienceFiction) {
+        template ("Science Fiction")
+      }
+      case (Family) {
+        template ("Family")
+      }
+      case (Animation) {
+        template ("Animation")
+      }
+      case (Comedy) {
+        template ("Comedy")
+      }
+      case (Romance) {
+        template ("Romance")
+      }
+      case (Western) {
+        template ("Western")
+      }
+      case (Drama) {
+        template ("Drama")
+      }
+      case (History) {
+        template ("History")
+      }
+      case (War) {
+        template ("War")
+      }
+      case (Documentary) {
+        template ("Documentary")
+      }
+      case (Music) {
+        template ("Music")
+      }
     }
   }
 }
@@ -83,11 +123,13 @@ template-macro-def (MOVIE_NO_RESULT) {
   params {
     param (movie) {
       type (Movie)
-      min (Optional) max (Many)
+      min (Optional)
+      max (Many)
     }
     param (action) {
       type (FindMovie)
-      min (Optional) max (One)
+      min (Optional)
+      max (One)
     }
   }
   content {
@@ -99,15 +141,18 @@ template-macro-def (MOVIE_RESULT) {
   params {
     param (movie) {
       type (Movie)
-      min (Optional) max (Many)
+      min (Optional)
+      max (Many)
     }
     param (action) {
       type (FindMovie)
-      min (Optional) max (One)
+      min (Optional)
+      max (One)
     }
     param (fromQuiz) {
       type (core.Boolean)
-      min (Optional) max (One)
+      min (Optional)
+      max (One)
       default (false)
     }
   }
@@ -115,13 +160,16 @@ template-macro-def (MOVIE_RESULT) {
     if (size(movie) == 1) {
       if ($handsFree) {
         template ("[#{value(movie.movieDetails.overview)}] I hope you enjoy #{macro('MOVIE_VALUE', movie)}!")
-      } else {
+      }
+      else {
         template ("Here's a #{macro('MOVIE_FROM_FINDMOVIE_CONCEPT', movie, action)}.")
       }
-    } else {
+    }
+    else {
       if (fromQuiz) {
         template ("Based on your answers, I found some [#{lower(macro('MOVIE_GENRE_VALUE', action.genre))}] movies perfect for you.")
-      } else {
+      }
+      else {
         template ("Here are a few #{macro('MOVIE_FROM_FINDMOVIE_CONCEPT', movie, action)}.")
 
       }
@@ -145,7 +193,8 @@ template-macro-def (QUIZ_UPDATE_PROMPT) {
   params {
     param (quiz) {
       type (Quiz)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
@@ -157,7 +206,8 @@ template-macro-def (QUIZ_FIRST_QUESTION) {
   params {
     param (quiz) {
       type (Quiz)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
@@ -171,7 +221,8 @@ template-macro-def (QUIZ_CURRENT_QUESTION) {
   params {
     param (quiz) {
       type (Quiz)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
@@ -183,7 +234,8 @@ template-macro-def (QUIZ_PREVIOUS_QUESTION_SELECTED_OPTION_COMMENTARY) {
   params {
     param (quiz) {
       type (Quiz)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
@@ -197,17 +249,20 @@ template-macro-def (RELEASE_DATE_TIME_EXPRESSION_VALUE) {
   params {
     param (releaseDateTimeExpression) {
       type (time.DateTimeExpression)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
     if (exists(releaseDateTimeExpression.dateInterval) || exists(releaseDateTimeExpression.dateTimeInterval)) {
       // Interval query
       template ("#{input(releaseDateTimeExpression)}")
-    } else-if (exists(releaseDateTimeExpression.dateTime)) {
+    }
+    else-if (exists(releaseDateTimeExpression.dateTime)) {
       // Punctual query for the release year
       template ("#{value(releaseDateTimeExpression.dateTime.date.year)}")
-    } else-if (exists(releaseDateTimeExpression.date)) {
+    }
+    else-if (exists(releaseDateTimeExpression.date)) {
       // Punctual query for the release year
       template ("#{value(releaseDateTimeExpression.date.year)}")
     }
@@ -242,7 +297,8 @@ template-macro-def (HANDS_FREE_MOVIE_HIGHLIGHT_SUMMARY) {
   params {
     param (movie) {
       type (Movie)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
@@ -255,7 +311,8 @@ template-macro-def (HANDS_FREE_MOVIE_NORMAL_SUMMARY) {
   params {
     param (movie) {
       type (Movie)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
@@ -299,13 +356,15 @@ template-macro-def (HANDS_FREE_OPTION_LAST_OPTION) {
   params {
     param (page) {
       type (Option)
-      min (Required) max (Many)
+      min (Required)
+      max (Many)
     }
   }
   content {
     if (size(page) == 1) {
       template ("The last option is:")
-      } else {
+    }
+    else {
       template ("The last options are:")
     }
   }
@@ -315,7 +374,8 @@ template-macro-def (HANDS_FREE_PERSON_LIST_SUMMARY) {
   params {
     param (name) {
       type (PersonName)
-      min (Required) max (Many)
+      min (Required)
+      max (Many)
     }
   }
   content {
@@ -352,7 +412,8 @@ template-macro-def (MOVIE_GENRE_HIGHLIGHT_SPOKEN_SUMMARY) {
   params {
     param (movieGenre) {
       type (MovieGenre)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
@@ -364,7 +425,8 @@ template-macro-def (MOVIE_VALUE) {
   params {
     param (movie) {
       type (Movie)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
@@ -378,7 +440,8 @@ template-macro-def (PERSON_NAME_VALUE) {
   params {
     param (name) {
       type (PersonName)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {

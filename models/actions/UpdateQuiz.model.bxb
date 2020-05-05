@@ -4,11 +4,13 @@ action (UpdateQuiz) {
   collect {
     input (answer) {
       type (Answer)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
     input (quiz) {
       type (Quiz)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   output (Quiz)

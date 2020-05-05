@@ -2,7 +2,8 @@ layout-macro-def (MOVIE_CREDITS) {
   params {
     param (movie) {
       type (Movie)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
@@ -19,7 +20,7 @@ layout-macro-def (MOVIE_CREDITS) {
           on-click {
             intent {
               goal: FetchMovieCredits
-              value: $expr(movie)
+              value: $expr (movie)
             }
           }
         }

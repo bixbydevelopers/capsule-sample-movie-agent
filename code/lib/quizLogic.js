@@ -15,22 +15,22 @@ function initializeQuiz() {
   return quiz
 }
 
-function updateQuiz (quiz, answer) {
+function updateQuiz(quiz, answer) {
   // See if answer corresponds to any of the current question options
-  var matchedIndex = quiz.questions[quiz.currentQuestion].options.findIndex(function(option) {
+  var matchedIndex = quiz.questions[quiz.currentQuestion].options.findIndex(function (option) {
     // Check alias
     if (stringCompare(answer, option.alias)) {
       return true
     }
     // Check match
-    return option.match.find(function(pattern) {
+    return option.match.find(function (pattern) {
       return regexCompare(answer, pattern)
     })
   })
   if (matchedIndex >= 0) {
     // Save the matched index
     quiz.questions[quiz.currentQuestion].selectedOption = matchedIndex
-     // Advance to next question
+    // Advance to next question
     quiz.currentQuestion++
     if (quiz.currentQuestion < quiz.questions.length) {
       // continue
@@ -46,7 +46,7 @@ function updateQuiz (quiz, answer) {
   return quiz
 }
 
-function stringCompare(a,b) {
+function stringCompare(a, b) {
   return a.toLowerCase() === b.toLowerCase()
 }
 
@@ -55,20 +55,20 @@ function regexCompare(textToSearch, regexPatternAsString) {
   return regex.test(textToSearch)
 }
 
-function computeOutcome (quiz) {
+function computeOutcome(quiz) {
   if (!quiz || !quiz.completed) {
     throw "Incomplete quiz"
   }
   var tally = {}
-  quiz.questions.forEach(function(question) {
-    question.options[question.selectedOption].outcome.forEach(function(outcome) {
+  quiz.questions.forEach(function (question) {
+    question.options[question.selectedOption].outcome.forEach(function (outcome) {
       tally[outcome] = tally[outcome] + 1 || 1
     })
   })
   console.info("Tally outcomes", JSON.stringify(tally))
   var topOutcome
   for (var outcome in tally) {
-    if (!topOutcome || tally[outcome] > tally[topOutcome]) {
+    if (!topOutcome || tally[outcome] > tally[topOutcome]) {
       topOutcome = outcome
     }
   }
@@ -119,9 +119,9 @@ function buildOutcome(outcomeJson) {
 // http://stackoverflow.com/questions/11935175/sampling-a-random-subset-from-an-array
 function getRandomSubarray(arr, size) {
   var shuffled = arr.slice(0),
-      i = arr.length,
-      min = i - size,
-      temp, index;
+    i = arr.length,
+    min = i - size,
+    temp, index;
   while (i-- > min) {
     index = Math.floor((i + 1) * Math.random());
     temp = shuffled[index];

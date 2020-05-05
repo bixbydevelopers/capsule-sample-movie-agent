@@ -2,17 +2,18 @@ layout-macro-def (MOVIE_SUMMARY) {
   params {
     param (movie) {
       type (Movie)
-      min (Required) max (One)
+      min (Required)
+      max (One)
     }
   }
   content {
     cell-card {
-			slot1 {
-				image {
-					shape (Square)
-					url ("[#{value(movie.posterUrl)}]")
-				}
-			}
+      slot1 {
+        image {
+          shape (Square)
+          url ("[#{value(movie.posterUrl)}]")
+        }
+      }
       slot2 {
         content {
           primary {

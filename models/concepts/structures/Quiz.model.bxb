@@ -3,33 +3,38 @@ structure (Quiz) {
   property (questions) {
     description (Questions in this quiz)
     type (Question)
-    min (Required) max (Many)
+    min (Required)
+    max (Many)
     visibility (Private)
   }
   property (textToSpeak) {
-    description(Question formatted for speech channel)
+    description (Question formatted for speech channel)
     type (core.Text)
-    min (Optional) max (One)
+    min (Optional)
+    max (One)
     visibility (Private)
   }
   property (currentQuestion) {
     description (Index of the current question)
     type (core.Integer)
-    min (Required) max (One)
+    min (Required)
+    max (One)
   }
   property (completed) {
     description (Toggles true when the quiz is completed)
     type (core.Boolean)
-    min (Required) max (One)
+    min (Required)
+    max (One)
     visibility (Private)
   }
   property (finalOutcome) {
     description (Set to the user's genre recommendation when the quiz is completed)
     type (MovieGenre)
-    min (Optional) max (One)
+    min (Optional)
+    max (One)
     visibility (Private)
   }
-  features{
+  features {
     transient
   }
 }
