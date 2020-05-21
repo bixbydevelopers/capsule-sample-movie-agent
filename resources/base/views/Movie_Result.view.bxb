@@ -2,6 +2,13 @@ result-view {
   match {
     Movie (results)
   }
+  message {
+    if (size(results) == 0) {
+      template ("#{event(results, 'NoResult')}")
+    } else {
+      template ("#{event(results, 'Result')}")
+    }
+  }
   render {
     if (size(results) == 1) {
       layout-macro (MOVIE_DETAILS) {
