@@ -32,6 +32,27 @@ This Capsule is like a travel agent to help you find your next movie adventure.
 For hands-on exercises that build upon this Capsule, head over to the [Code
 Puzzles](./codelab/CODELAB.md).
 
+## Device- And Locale-Specific Views
+
+### File Structure
+
+All views and layouts belong in a subfolder of the Resources subfolder. These subfolders can be the `base` folder, a device-specific folder such as `bixby-watch`, a locale-specific folder such as `en`, or a device- and locale-specific folder such as `bixby-watch-en`. 
+
+In this capsule, there are two subfolders that contain views and layouts: 
+
+1. `base`
+1. `bixby-watch`
+
+The `base` folder contains the views and layouts that are common across all targets. This means that a view or layout does not need to be customized if the information does not need to be presented differently depending on the user's device.
+
+The `bixby-watch` folder contain views and layouts for their respective devices. These will be used to provide users with the experience intended for the watch target when invoking this capsule from their watch device.
+
+### Design Decisions
+
+There are two methods of customizing views for each target: dedicated views and in-line routing. [This article](https://bixbydevelopers.zendesk.com/knowledge/articles/360047341294) in our Help Center provides more information on how to do both.
+
+The method used in this capsule is defining dedicated views for each target rather than in-line device-specific routing. The reason for this is the stark difference between the mobile and watch views. If done in-line, the resulting view would be bloated and quite hard to maintain moving forward. In-line changes should be limited to small tweaks rather than for large customizations.
+
 ## References
 
 ### Data Source
