@@ -33,10 +33,10 @@ input-view {
                 template-macro (HANDS_FREE_OPTION_UNDERFLOW_STATEMENT)
               }
               item-selection-question {
-                if (isFirstNavPage(page) && isLastNavPage(page)) { // There is only one page 
+                if (exists(page) && isFirstNavPage(page) && isLastNavPage(page)) { // There is only one page 
                   template ("")
                 }
-                else-if (!isLastNavPage(page)) {
+                else-if (exists(page) && !isLastNavPage(page)) {
                   template-macro (HANDS_FREE_OPTION_ITEM_SELECTION_MORE_PAGES)
                 }
                 else { // Last page
@@ -50,7 +50,7 @@ input-view {
                 template-macro (HANDS_FREE_OPTION_OVERFLOW_QUESTION)
               }
               page-marker {
-                if (!isFirstNavPage(page) && isLastNavPage(page)) {
+                if (exists(page) && !isFirstNavPage(page) && isLastNavPage(page)) {
                   template-macro (HANDS_FREE_OPTION_LAST_OPTION) {
                     param (page) {
                       expression (page)

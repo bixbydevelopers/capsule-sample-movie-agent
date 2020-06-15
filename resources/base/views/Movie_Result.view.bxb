@@ -22,7 +22,6 @@ result-view {
         navigation-mode {
           if ($handsFree) {
             read-one {
-              with-navigation-conversation-drivers
               list-summary {
                 template ("#{event(results, 'Result')}")
               }
@@ -43,7 +42,6 @@ result-view {
             }
           }
         }
-        has-details (true)
         highlights {
           select (pick) {
             label {

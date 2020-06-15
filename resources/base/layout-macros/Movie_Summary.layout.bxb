@@ -21,6 +21,9 @@ layout-macro-def (MOVIE_SUMMARY) {
           }
         }
       }
+      on-click {
+        view-for (movie)
+      }
     }
   }
 }

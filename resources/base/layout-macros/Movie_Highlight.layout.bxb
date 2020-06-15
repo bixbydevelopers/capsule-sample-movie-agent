@@ -28,6 +28,9 @@ layout-macro-def (MOVIE_HIGHLIGHT) {
           }
         }
       }
+      on-click {
+        view-for (movie)
+      }
     }
   }
 }
