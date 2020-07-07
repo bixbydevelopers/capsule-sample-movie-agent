@@ -1,145 +1,126 @@
 layout-macro-def (MOVIE_DETAILS_WATCH) {
-	params {
-		param (movie) {
-			type (Movie)
-			min (Required)
-			max (One)
-		}
-	}
-	content {
-		layout {
-			section {
-				content {
-					paragraph {
-						value ("#{value(movie.title)}")
-						style (Title_M)
-					}
-					spacer
-					divider
-					spacer
-					hbox {
-						content {
-							vbox {
-								grow (1)
-								halign (Center)
-								content {
-									text {
-										value ("Released")
-										style (Detail_L_Soft)
-									}
-									text {
-										value ("#{dateTime(movie.releaseDate, 'MMM dd, yyyy')}")
-										style (Title_S)
-									}
-								}
-							}
-						}
-					}
-					spacer
-					divider
-					spacer
-					hbox {
-						content {
-							vbox {
-								grow (1)
-								halign (Center)
-								content {
-									text {
-										value ("Runtime")
-										style (Detail_L_Soft)
-									}
-									if (exists(movie.movieDetails.runtime)) {
-										text {
-											value ("[#{value(movie.movieDetails.runtime)}]")
-											style (Title_S)
-										}
-									}
-								}
-							}
-						}
-					}
-					spacer
-					divider
-					spacer
-					hbox {
-						content {
-							vbox {
-								grow (1)
-								halign (Center)
-								content {
-									if (exists(movie.movieDetails.budget) && movie.movieDetails.budget > 0) {
-										text {
-											value ("Budget")
-											style (Detail_L_Soft)
-										}
-										text {
-											value ("[$#{number(movie.movieDetails.budget, '#,##0')}]")
-											style (Title_S)
-										}
-									}
-								}
-							}
-						}
-					}
-					spacer
-					divider
-					spacer
-					hbox {
-						content {
-							vbox {
-								grow (1)
-								halign (Center)
-								content {
-									if (exists(movie.movieDetails.revenue) && movie.movieDetails.revenue > 0) {
-										text {
-											value ("Revenue")
-											style (Detail_L_Soft)
-										}
-										text {
-											value ("[$#{number(movie.movieDetails.revenue, '#,##0')}]")
-											style (Title_S)
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-			section {
-				content {
-					paragraph {
-						value ("[#{value(movie.movieDetails.tagline)}]")
-						style (Title_S)
-					}
-					paragraph {
-						value ("[#{value(movie.movieDetails.overview)}]")
-						style (Detail_L)
-					}
-				}
-			}
-			section {
-				content {
-					paragraph {
-						value {
-							template-macro (GENRES)
-						}
-						style (Detail_L_Soft)
-					}
-					partitioned {
-						content {
-							for-each (movie.genre) {
-								as (genre) {
-									paragraph {
-										value ("#{macro('MOVIE_GENRE_VALUE', genre)}")
-										style (Detail_L)
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+  params {
+    param (movie) {
+      type (Movie)
+      min (Required)
+      max (One)
+    }
+  }
+  content {
+    layout {
+      section {
+        content {
+          paragraph {
+            value ("#{value(movie.title)}")
+            style (Title_M)
+          }
+          spacer
+          divider
+          spacer
+          single-line {
+            text {
+              value ("Released")
+              style (Detail_L_Soft)
+            }
+          }
+          spacer
+          single-line {
+            text{
+              value ("#{dateTime(movie.releaseDate, 'MMM dd, yyyy')}")
+              style (Title_S)
+            }
+          }
+          spacer
+          divider
+          spacer
+          single-line {
+            text {
+              value ("Runtime")
+              style (Detail_L_Soft)
+            }
+          }
+          spacer
+          if (exists(movie.movieDetails.runtime)) {
+            single-line {
+              text {
+                value ("[#{value(movie.movieDetails.runtime)}]")
+                style (Title_S)
+              }
+            }
+          }
+          spacer
+          divider
+          spacer
+          
+          if (exists(movie.movieDetails.budget) && movie.movieDetails.budget > 0) {
+            single-line {
+              text {
+                value ("Budget")
+                style (Detail_L_Soft)
+              }
+            }
+            spacer
+            single-line {
+              text {
+                value ("[$#{number(movie.movieDetails.budget, '#,##0')}]")
+                style (Title_S)
+              }
+            }
+          }
+          spacer
+          divider
+          spacer
+          if (exists(movie.movieDetails.revenue) && movie.movieDetails.revenue > 0) {
+            single-line {
+              text {
+                value ("Revenue")
+                style (Detail_L_Soft)
+              }
+            }
+            spacer
+            single-line {
+              text {
+                value ("[$#{number(movie.movieDetails.revenue, '#,##0')}]")
+                style (Title_S)
+              }
+            }
+          }
+        }
+      }
+      section {
+        content {
+          paragraph {
+            value ("[#{value(movie.movieDetails.tagline)}]")
+            style (Title_S)
+          }
+          paragraph {
+            value ("[#{value(movie.movieDetails.overview)}]")
+            style (Detail_L)
+          }
+        }
+      }
+      section {
+        content {
+          paragraph {
+            value {
+              template-macro (GENRES)
+            }
+            style (Detail_L_Soft)
+          }
+          partitioned {
+            content {
+              for-each (movie.genre) {
+                as (genre) {
+                  paragraph {
+                    value ("#{macro('MOVIE_GENRE_VALUE', genre)}")
+                    style (Detail_L)
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
