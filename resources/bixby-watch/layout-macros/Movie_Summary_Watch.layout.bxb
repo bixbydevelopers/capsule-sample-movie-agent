@@ -1,0 +1,27 @@
+layout-macro-def (MOVIE_SUMMARY_WATCH) {
+  params {
+    param (movie) {
+      type (Movie)
+      min (Required)
+      max (One)
+    }
+  }
+  content {
+    image-card {
+      aspect-ratio (Four_Three)
+			image-object-fit (Cover)
+			image-url ("[#{value(movie.posterUrl)}]")
+			text-position (Overlay)
+			title-area {
+				halign (Center)
+				slot1 {
+					text {
+						value {
+							template ("#{value(movie.title)}")
+						}
+					}
+				}
+			}
+		}
+	}
+}

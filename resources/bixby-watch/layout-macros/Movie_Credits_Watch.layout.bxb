@@ -1,0 +1,30 @@
+layout-macro-def (MOVIE_CREDITS_WATCH) {
+  params {
+    param (movie) {
+      type (Movie)
+      min (Required)
+      max (One)
+    }
+  }
+  content {
+    section {
+      content {
+        cell-card {
+          slot2 {
+            content {
+              primary {
+                template ("Movie credits")
+              }
+            }
+          }
+          on-click {
+            intent {
+              goal: FetchMovieCredits
+              value: $expr (movie)
+            }
+          }
+        }
+      }
+    }
+  }
+}
