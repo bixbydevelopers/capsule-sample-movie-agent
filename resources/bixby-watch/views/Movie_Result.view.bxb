@@ -36,7 +36,6 @@ result-view {
 						}
 					}
 				}
-				has-details (true)
 				highlights {
 					select (pick) {
 						label {
