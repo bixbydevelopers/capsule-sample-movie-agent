@@ -1,0 +1,7 @@
+legal {
+  country-documents { 
+    terms-and-conditions {
+      url(https://www.themoviedb.org/terms-of-use)
+    }     
+  }
+}
