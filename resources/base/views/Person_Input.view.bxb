@@ -5,7 +5,7 @@ input-view {
     }
   }
   message {
-    template-macro (PERSON_SELECTION_PROMPT)
+    macro (PERSON_SELECTION_PROMPT)
   }
   render {
     selection-of (candidates) {
@@ -14,7 +14,7 @@ input-view {
           read-one {
             with-navigation-conversation-drivers
             list-summary {
-              template-macro (HANDS_FREE_PERSON_LIST_SUMMARY) {
+              macro (HANDS_FREE_PERSON_LIST_SUMMARY) {
                 param (name) {
                   if (exists(name)) {
                     expression (name)
@@ -24,23 +24,23 @@ input-view {
             }
             page-content {
               item-selection-question {
-                template-macro (HANDS_FREE_PERSON_ITEM_SELECTION_QUESTION)
+                macro (HANDS_FREE_PERSON_ITEM_SELECTION_QUESTION)
               }
               overflow-statement {
-                template-macro (HANDS_FREE_PERSON_OVERFLOW_STATEMENT)
+                macro (HANDS_FREE_PERSON_OVERFLOW_STATEMENT)
               }
               overflow-question {
-                template-macro (HANDS_FREE_PERSON_OVERFLOW_QUESTION)
+                macro (HANDS_FREE_PERSON_OVERFLOW_QUESTION)
               }
               underflow-statement {
-                template-macro (HANDS_FREE_PERSON_UNDERFLOW_STATEMENT)
+                macro (HANDS_FREE_PERSON_UNDERFLOW_STATEMENT)
               }
             }
           }
         }
       }
       where-each (candidate) {
-        layout-macro (PERSON_SUMMARY) {
+        macro (PERSON_SUMMARY) {
           param (person) {
             expression (candidate)
           }
