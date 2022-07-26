@@ -110,7 +110,7 @@ layout-macro-def (MOVIE_DETAILS) {
         content {
           paragraph {
             value {
-              template-macro (GENRES)
+              macro (GENRES)
             }
             style (Detail_L_Soft)
           }

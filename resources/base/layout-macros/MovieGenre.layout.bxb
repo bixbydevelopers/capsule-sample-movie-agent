@@ -11,7 +11,7 @@ layout-macro-def (MOVIE_GENRE_SUMMARY) {
       slot2 {
         content {
           primary {
-            template-macro (MOVIE_GENRE_VALUE) {
+            macro (MOVIE_GENRE_VALUE) {
               param (genre) {
                 expression (genre)
               }

@@ -1,12 +1,12 @@
 input-view {
   match: MovieGenre (candidates)
   message {
-    template-macro (MOVIE_GENRE_SELECTION_PROMPT)
+    macro (MOVIE_GENRE_SELECTION_PROMPT)
   }
   render {
     selection-of (candidates) {
       where-each (candidate) {
-        layout-macro (MOVIE_GENRE_SUMMARY) {
+        macro (MOVIE_GENRE_SUMMARY) {
           param (genre) {
             expression (candidate)
           }
@@ -15,16 +15,16 @@ input-view {
       highlights {
         select (pick) {
           summary {
-            template-macro (MOVIE_GENRE_HIGHLIGHT_SPOKEN_SUMMARY) {
+            macro (MOVIE_GENRE_HIGHLIGHT_SPOKEN_SUMMARY) {
               param (movieGenre) {
                 expression (pick)
               }
             }
           }
           label {
-            template-macro (MOVIE_GENRE_HIGHLIGHT_LABEL_TODAY)
+            macro (MOVIE_GENRE_HIGHLIGHT_LABEL_TODAY)
           }
-          layout-macro (MOVIE_GENRE_SUMMARY) {
+          macro (MOVIE_GENRE_SUMMARY) {
             param (genre) {
               expression (pick)
             }
@@ -37,7 +37,7 @@ input-view {
   }
   conversation-drivers {
     conversation-driver {
-      template-macro (PLAY_GENRE_QUIZ_CONVO_DRIVER)
+      macro (PLAY_GENRE_QUIZ_CONVO_DRIVER)
     }
   }
 }

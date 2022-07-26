@@ -4,7 +4,7 @@ result-view {
 	}
 	render {
 		if (size(results) == 1) {
-			layout-macro (MOVIE_DETAILS_WATCH) {
+			macro (MOVIE_DETAILS_WATCH) {
 				param (movie) {
 					expression (results)
 				}
@@ -21,16 +21,16 @@ result-view {
 							}
 							page-content {
 								item-selection-question {
-									template-macro (HANDS_FREE_MOVIE_ITEM_SELECTION_QUESTION)
+									macro (HANDS_FREE_MOVIE_ITEM_SELECTION_QUESTION)
 								}
 								overflow-statement {
-									template-macro (HANDS_FREE_MOVIE_OVERFLOW_STATEMENT)
+									macro (HANDS_FREE_MOVIE_OVERFLOW_STATEMENT)
 								}
 								overflow-question {
-									template-macro (HANDS_FREE_MOVIE_OVERFLOW_QUESTION)
+									macro (HANDS_FREE_MOVIE_OVERFLOW_QUESTION)
 								}
 								underflow-statement {
-									template-macro (HANDS_FREE_MOVIE_UNDERFLOW_STATEMENT)
+									macro (HANDS_FREE_MOVIE_UNDERFLOW_STATEMENT)
 								}
 							}
 						}
@@ -39,15 +39,15 @@ result-view {
 				highlights {
 					select (pick) {
 						label {
-							template-macro (MOVIE_HIGHLIGHT_LABEL)
+							macro (MOVIE_HIGHLIGHT_LABEL)
 						}
-						layout-macro (MOVIE_HIGHLIGHT_WATCH) {
+						macro (MOVIE_HIGHLIGHT_WATCH) {
 							param (movie) {
 								expression (pick)
 							}
 						}
 						summary {
-							template-macro (HANDS_FREE_MOVIE_HIGHLIGHT_SUMMARY) {
+							macro (HANDS_FREE_MOVIE_HIGHLIGHT_SUMMARY) {
 								param (movie) {
 									expression (pick)
 								}
@@ -57,21 +57,21 @@ result-view {
 				}
 				where-each (result) {
 					if ($handsFree) {
-						layout-macro (MOVIE_HIGHLIGHT_WATCH) {
+						macro (MOVIE_HIGHLIGHT_WATCH) {
 							param (movie) {
 								expression (result)
 							}
 						}
 					}
 					else {
-						layout-macro (MOVIE_SUMMARY_WATCH) {
+						macro (MOVIE_SUMMARY_WATCH) {
 							param (movie) {
 								expression (result)
 							}
 						}
 					}
 					spoken-summary {
-						template-macro (HANDS_FREE_MOVIE_NORMAL_SUMMARY) {
+						macro (HANDS_FREE_MOVIE_NORMAL_SUMMARY) {
 							param (movie) {
 								expression (result)
 							}

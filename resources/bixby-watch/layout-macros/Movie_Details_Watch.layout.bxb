@@ -103,7 +103,7 @@ layout-macro-def (MOVIE_DETAILS_WATCH) {
         content {
           paragraph {
             value {
-              template-macro (GENRES)
+              macro (GENRES)
             }
             style (Detail_L_Soft)
           }

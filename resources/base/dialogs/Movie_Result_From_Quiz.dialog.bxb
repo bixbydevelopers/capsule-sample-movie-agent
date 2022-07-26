@@ -7,7 +7,7 @@ dialog (Result) {
       }
     }
   }
-  template-macro (MOVIE_RESULT) {
+  macro (MOVIE_RESULT) {
     param (movie) {
       expression (movie)
     }

@@ -8,7 +8,7 @@ input-view {
     }
   }
   message {
-    template-macro (QUIZ_UPDATE_PROMPT) {
+    macro (QUIZ_UPDATE_PROMPT) {
       param (quiz) {
         expression (quiz)
       }
@@ -22,7 +22,7 @@ input-view {
           read-many {
             page-size (5)
             list-summary {
-              template-macro (QUIZ_UPDATE_PROMPT) {
+              macro (QUIZ_UPDATE_PROMPT) {
                 param (quiz) {
                   expression (quiz)
                 }
@@ -30,28 +30,28 @@ input-view {
             }
             page-content (page) {
               underflow-statement {
-                template-macro (HANDS_FREE_OPTION_UNDERFLOW_STATEMENT)
+                macro (HANDS_FREE_OPTION_UNDERFLOW_STATEMENT)
               }
               item-selection-question {
                 if (exists(page) && isFirstNavPage(page) && isLastNavPage(page)) { // There is only one page 
                   template ("")
                 }
                 else-if (exists(page) && !isLastNavPage(page)) {
-                  template-macro (HANDS_FREE_OPTION_ITEM_SELECTION_MORE_PAGES)
+                  macro (HANDS_FREE_OPTION_ITEM_SELECTION_MORE_PAGES)
                 }
                 else { // Last page
-                  template-macro (HANDS_FREE_OPTION_ITEM_SELECTION_LAST_PAGES)
+                  macro (HANDS_FREE_OPTION_ITEM_SELECTION_LAST_PAGES)
                 }
               }
               overflow-statement {
-                template-macro (HANDS_FREE_OPTION_OVERFLOW_STATEMENT)
+                macro (HANDS_FREE_OPTION_OVERFLOW_STATEMENT)
               }
               overflow-question {
-                template-macro (HANDS_FREE_OPTION_OVERFLOW_QUESTION)
+                macro (HANDS_FREE_OPTION_OVERFLOW_QUESTION)
               }
               page-marker {
                 if (exists(page) && !isFirstNavPage(page) && isLastNavPage(page)) {
-                  template-macro (HANDS_FREE_OPTION_LAST_OPTION) {
+                  macro (HANDS_FREE_OPTION_LAST_OPTION) {
                     param (page) {
                       expression (page)
                     }

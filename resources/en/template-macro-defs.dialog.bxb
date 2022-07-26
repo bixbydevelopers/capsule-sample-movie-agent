@@ -374,7 +374,7 @@ template-macro-def (HANDS_FREE_PERSON_LIST_SUMMARY) {
   params {
     param (name) {
       type (PersonName)
-      min (Required)
+      min (Optional)
       max (Many)
     }
   }
