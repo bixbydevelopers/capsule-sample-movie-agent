@@ -1,4 +1,4 @@
-layout-macro-def (PERSON_SUMMARY_WATCH) {
+macro-def (PERSON_SUMMARY_WATCH) {
   params {
     param (person) {
       type (Person)

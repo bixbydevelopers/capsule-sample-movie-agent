@@ -1,4 +1,4 @@
-layout-macro-def (MOVIE_SUMMARY_WATCH) {
+macro-def (MOVIE_SUMMARY_WATCH) {
   params {
     param (movie) {
       type (Movie)
