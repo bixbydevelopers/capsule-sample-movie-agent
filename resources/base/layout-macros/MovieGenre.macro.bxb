@@ -1,4 +1,4 @@
-layout-macro-def (MOVIE_GENRE_SUMMARY) {
+macro-def (MOVIE_GENRE_SUMMARY) {
   params {
     param (genre) {
       type (MovieGenre)

@@ -1,10 +1,10 @@
-template-macro-def (GENRES) {
+macro-def (GENRES) {
   content {
     template ("Genres")
   }
 }
 
-template-macro-def (MOVIE_FROM_FINDMOVIE_CONCEPT) {
+macro-def (MOVIE_FROM_FINDMOVIE_CONCEPT) {
   params {
     param (movie) {
       type (Movie)
@@ -27,25 +27,25 @@ template-macro-def (MOVIE_FROM_FINDMOVIE_CONCEPT) {
   }
 }
 
-template-macro-def (MOVIE_GENRE_HIGHLIGHT_LABEL_RANDOM) {
+macro-def (MOVIE_GENRE_HIGHLIGHT_LABEL_RANDOM) {
   content {
     template ("Rolling the dice")
   }
 }
 
-template-macro-def (MOVIE_GENRE_HIGHLIGHT_LABEL_TODAY) {
+macro-def (MOVIE_GENRE_HIGHLIGHT_LABEL_TODAY) {
   content {
     template ("Today's highlight")
   }
 }
 
-template-macro-def (MOVIE_GENRE_SELECTION_PROMPT) {
+macro-def (MOVIE_GENRE_SELECTION_PROMPT) {
   content {
     template ("Which genre are you in the mood for?")
   }
 }
 
-template-macro-def (MOVIE_GENRE_VALUE) {
+macro-def (MOVIE_GENRE_VALUE) {
   params {
     param (genre) {
       type (MovieGenre)
@@ -113,13 +113,13 @@ template-macro-def (MOVIE_GENRE_VALUE) {
   }
 }
 
-template-macro-def (MOVIE_HIGHLIGHT_LABEL) {
+macro-def (MOVIE_HIGHLIGHT_LABEL) {
   content {
     template ("Top recommendation")
   }
 }
 
-template-macro-def (MOVIE_NO_RESULT) {
+macro-def (MOVIE_NO_RESULT) {
   params {
     param (movie) {
       type (Movie)
@@ -137,7 +137,7 @@ template-macro-def (MOVIE_NO_RESULT) {
   }
 }
 
-template-macro-def (MOVIE_RESULT) {
+macro-def (MOVIE_RESULT) {
   params {
     param (movie) {
       type (Movie)
@@ -177,19 +177,19 @@ template-macro-def (MOVIE_RESULT) {
   }
 }
 
-template-macro-def (PERSON_SELECTION_PROMPT) {
+macro-def (PERSON_SELECTION_PROMPT) {
   content {
     template ("Which person?")
   }
 }
 
-template-macro-def (PLAY_GENRE_QUIZ_CONVO_DRIVER) {
+macro-def (PLAY_GENRE_QUIZ_CONVO_DRIVER) {
   content {
     template ("Help me choose")
   }
 }
 
-template-macro-def (QUIZ_UPDATE_PROMPT) {
+macro-def (QUIZ_UPDATE_PROMPT) {
   params {
     param (quiz) {
       type (Quiz)
@@ -202,7 +202,7 @@ template-macro-def (QUIZ_UPDATE_PROMPT) {
   }
 }
 
-template-macro-def (QUIZ_FIRST_QUESTION) {
+macro-def (QUIZ_FIRST_QUESTION) {
   params {
     param (quiz) {
       type (Quiz)
@@ -217,7 +217,7 @@ template-macro-def (QUIZ_FIRST_QUESTION) {
   }
 }
 
-template-macro-def (QUIZ_CURRENT_QUESTION) {
+macro-def (QUIZ_CURRENT_QUESTION) {
   params {
     param (quiz) {
       type (Quiz)
@@ -230,7 +230,7 @@ template-macro-def (QUIZ_CURRENT_QUESTION) {
   }
 }
 
-template-macro-def (QUIZ_PREVIOUS_QUESTION_SELECTED_OPTION_COMMENTARY) {
+macro-def (QUIZ_PREVIOUS_QUESTION_SELECTED_OPTION_COMMENTARY) {
   params {
     param (quiz) {
       type (Quiz)
@@ -245,7 +245,7 @@ template-macro-def (QUIZ_PREVIOUS_QUESTION_SELECTED_OPTION_COMMENTARY) {
   }
 }
 
-template-macro-def (RELEASE_DATE_TIME_EXPRESSION_VALUE) {
+macro-def (RELEASE_DATE_TIME_EXPRESSION_VALUE) {
   params {
     param (releaseDateTimeExpression) {
       type (time.DateTimeExpression)
@@ -269,31 +269,31 @@ template-macro-def (RELEASE_DATE_TIME_EXPRESSION_VALUE) {
   }
 }
 
-template-macro-def (HANDS_FREE_MOVIE_ITEM_SELECTION_QUESTION) {
+macro-def (HANDS_FREE_MOVIE_ITEM_SELECTION_QUESTION) {
   content {
     template ("Would you like to hear a summary for this movie?")
   }
 }
 
-template-macro-def (HANDS_FREE_MOVIE_OVERFLOW_STATEMENT) {
+macro-def (HANDS_FREE_MOVIE_OVERFLOW_STATEMENT) {
   content {
     template ("These are all the movies I have.")
   }
 }
 
-template-macro-def (HANDS_FREE_MOVIE_OVERFLOW_QUESTION) {
+macro-def (HANDS_FREE_MOVIE_OVERFLOW_QUESTION) {
   content {
     template ("Which movie would you like?")
   }
 }
 
-template-macro-def (HANDS_FREE_MOVIE_UNDERFLOW_STATEMENT) {
+macro-def (HANDS_FREE_MOVIE_UNDERFLOW_STATEMENT) {
   content {
     template ("This is the first movie.")
   }
 }
 
-template-macro-def (HANDS_FREE_MOVIE_HIGHLIGHT_SUMMARY) {
+macro-def (HANDS_FREE_MOVIE_HIGHLIGHT_SUMMARY) {
   params {
     param (movie) {
       type (Movie)
@@ -307,7 +307,7 @@ template-macro-def (HANDS_FREE_MOVIE_HIGHLIGHT_SUMMARY) {
   }
 }
 
-template-macro-def (HANDS_FREE_MOVIE_NORMAL_SUMMARY) {
+macro-def (HANDS_FREE_MOVIE_NORMAL_SUMMARY) {
   params {
     param (movie) {
       type (Movie)
@@ -321,38 +321,38 @@ template-macro-def (HANDS_FREE_MOVIE_NORMAL_SUMMARY) {
   }
 }
 
-template-macro-def (HANDS_FREE_OPTION_UNDERFLOW_STATEMENT) {
+macro-def (HANDS_FREE_OPTION_UNDERFLOW_STATEMENT) {
   content {
     template ("This is the first set of options.")
   }
 }
 
-template-macro-def (HANDS_FREE_OPTION_ITEM_SELECTION_MORE_PAGES) {
+macro-def (HANDS_FREE_OPTION_ITEM_SELECTION_MORE_PAGES) {
   content {
     template ("Or, say \"More\" to hear more options.")
   }
 }
 
-template-macro-def (HANDS_FREE_OPTION_ITEM_SELECTION_LAST_PAGES) {
+macro-def (HANDS_FREE_OPTION_ITEM_SELECTION_LAST_PAGES) {
   content {
     template ("That's all the options I have. Which will you choose?")
   }
 }
 
 
-template-macro-def (HANDS_FREE_OPTION_OVERFLOW_QUESTION) {
+macro-def (HANDS_FREE_OPTION_OVERFLOW_QUESTION) {
   content {
     template ("Which option will you choose?")
   }
 }
 
-template-macro-def (HANDS_FREE_OPTION_OVERFLOW_STATEMENT) {
+macro-def (HANDS_FREE_OPTION_OVERFLOW_STATEMENT) {
   content {
     template ("There aren't any more options you can choose from.")
   }
 }
 
-template-macro-def (HANDS_FREE_OPTION_LAST_OPTION) {
+macro-def (HANDS_FREE_OPTION_LAST_OPTION) {
   params {
     param (page) {
       type (Option)
@@ -370,7 +370,7 @@ template-macro-def (HANDS_FREE_OPTION_LAST_OPTION) {
   }
 }
 
-template-macro-def (HANDS_FREE_PERSON_LIST_SUMMARY) {
+macro-def (HANDS_FREE_PERSON_LIST_SUMMARY) {
   params {
     param (name) {
       type (PersonName)
@@ -383,32 +383,32 @@ template-macro-def (HANDS_FREE_PERSON_LIST_SUMMARY) {
   }
 }
 
-template-macro-def (HANDS_FREE_PERSON_ITEM_SELECTION_QUESTION) {
+macro-def (HANDS_FREE_PERSON_ITEM_SELECTION_QUESTION) {
   content {
     template ("Is this who you're looking for?")
   }
 }
 
-template-macro-def (HANDS_FREE_PERSON_OVERFLOW_STATEMENT) {
+macro-def (HANDS_FREE_PERSON_OVERFLOW_STATEMENT) {
   content {
     template ("I don't have any more results.")
   }
 }
 
-template-macro-def (HANDS_FREE_PERSON_OVERFLOW_QUESTION) {
+macro-def (HANDS_FREE_PERSON_OVERFLOW_QUESTION) {
   content {
     template ("Who are you looking for?")
   }
 }
 
 
-template-macro-def (HANDS_FREE_PERSON_UNDERFLOW_STATEMENT) {
+macro-def (HANDS_FREE_PERSON_UNDERFLOW_STATEMENT) {
   content {
     template ("That's the first person I have.")
   }
 }
 
-template-macro-def (MOVIE_GENRE_HIGHLIGHT_SPOKEN_SUMMARY) {
+macro-def (MOVIE_GENRE_HIGHLIGHT_SPOKEN_SUMMARY) {
   params {
     param (movieGenre) {
       type (MovieGenre)
@@ -421,7 +421,7 @@ template-macro-def (MOVIE_GENRE_HIGHLIGHT_SPOKEN_SUMMARY) {
   }
 }
 
-template-macro-def (MOVIE_VALUE) {
+macro-def (MOVIE_VALUE) {
   params {
     param (movie) {
       type (Movie)
@@ -436,7 +436,7 @@ template-macro-def (MOVIE_VALUE) {
   }
 }
 
-template-macro-def (PERSON_NAME_VALUE) {
+macro-def (PERSON_NAME_VALUE) {
   params {
     param (name) {
       type (PersonName)
