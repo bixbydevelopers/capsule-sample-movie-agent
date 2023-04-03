@@ -1,8 +1,14 @@
-var tmdb = require('./lib/TMDB.js')
-var parser = require('./lib/parser.js')
+import tmdb from "./lib/TMDB.js";
+import parser from "./lib/parser.js";
+import console from 'console';
 
-module.exports.function = function findMovie(releaseDateTimeExpression, person, genre) {
-  const response = tmdb.discoverMovie(releaseDateTimeExpression, person, genre)
-  const movies = parser.parseMovies(response)
-  return movies
+export default function findMovie({
+  releaseDateTimeExpression,
+  person,
+  genre,
+  $vivContext,
+}) {
+  const response = tmdb.discoverMovie(releaseDateTimeExpression, person, genre, $vivContext);
+  const movies = parser.parseMovies(response, $vivContext);
+  return movies;
 }

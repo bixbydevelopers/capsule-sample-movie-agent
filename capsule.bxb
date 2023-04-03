@@ -1,6 +1,6 @@
 capsule {
   id (example.movieAgent)
-  version (1.0.0)
+  version (1.1.0) //  JSRS migration VCAP-24163
   format (3)
   targets {
     target (bixby-mobile-en-US)
@@ -18,6 +18,7 @@ capsule {
     }
   }
   runtime-version (7) {
+    js-runtime-version (2)
     overrides {
       auto-on-click-for-list-of (true)
     }

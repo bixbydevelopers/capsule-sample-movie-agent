@@ -1,5 +1,5 @@
-const { initializeQuiz } = require("./lib/quizLogic.js")
+import quizLogic from "./lib/quizLogic.js";
 
-exports.function = function() {
-  return initializeQuiz()
+export default function () {
+  return quizLogic.initializeQuiz();
 }
