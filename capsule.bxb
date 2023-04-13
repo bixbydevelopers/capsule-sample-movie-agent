@@ -14,7 +14,7 @@ capsule {
     }
     import (viv.time) {
       as (time)
-      version (3.3.34)
+      version (3.6.6)
     }
   }
   runtime-version (7) {

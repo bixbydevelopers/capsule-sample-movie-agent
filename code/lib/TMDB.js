@@ -4,16 +4,16 @@ import * as properties from "./properties.js";
 import movieGenreMap from "./movieGenreMap.js";
 import console from "console";
 
-export default {
-  discoverMovie: discoverMovie,
-  getConfiguration: getConfiguration,
-  getMovie: getMovie,
-  getMovieCredits: getMovieCredits,
-  getTrendingMovies: getTrendingMovies,
-  searchPerson: searchPerson,
-};
+// export default {
+//   discoverMovie: discoverMovie,
+//   getConfiguration: getConfiguration,
+//   getMovie: getMovie,
+//   getMovieCredits: getMovieCredits,
+//   getTrendingMovies: getTrendingMovies,
+//   searchPerson: searchPerson,
+// };
 
-function discoverMovie(releaseDateTimeExpression, person, genre, $vivContext) {
+export function discoverMovie(releaseDateTimeExpression, person, genre, $vivContext) {
   const url = 'https://api.themoviedb.org/3/discover/movie';
   const query = {
     api_key: properties.get('secret', 'apiKey'),
@@ -35,7 +35,7 @@ function discoverMovie(releaseDateTimeExpression, person, genre, $vivContext) {
   return response;
 }
 
-function getConfiguration() {
+export function getConfiguration() {
   const url = 'https://api.themoviedb.org/3/configuration';
   const query = {
     api_key: properties.get('secret', 'apiKey'),
@@ -49,7 +49,7 @@ function getConfiguration() {
   return response;
 }
 
-function getMovie(movie) {
+export function getMovie(movie) {
   if (movie) {
     const url = 'https://api.themoviedb.org/3/movie/' + movie.$id;
     const query = {
@@ -64,7 +64,7 @@ function getMovie(movie) {
   }
 }
 
-function getMovieCredits(movie) {
+export function getMovieCredits(movie) {
   if (movie) {
     const url = 'https://api.themoviedb.org/3/movie/' + movie.$id + '/credits';
     const query = {
@@ -79,7 +79,7 @@ function getMovieCredits(movie) {
   }
 }
 
-function getTrendingMovies(dateTimeExpression, $vivContext) {
+export function getTrendingMovies(dateTimeExpression, $vivContext) {
   ZonedDateTime.setVivContext($vivContext);
   const inputType = 'viv.time.DateTimeExpression';
   // Default to now
@@ -110,7 +110,7 @@ function getTrendingMovies(dateTimeExpression, $vivContext) {
   }
 }
 
-function searchPerson(name) {
+export function searchPerson(name) {
   if (name) {
     const url = 'https://api.themoviedb.org/3/search/person';
     const query = {

@@ -1,16 +1,16 @@
 import ZonedDateTime from './zoned-date-time-polyfill.js';
-import tmdb from "./TMDB.js";
+import * as tmdb from "./TMDB.js";
 import movieGenreMap from "./movieGenreMap.js";
 import console from "console";
 
-export default {
-  parseCredits: parseCredits,
-  parseMovieDetails: parseMovieDetails,
-  parseMovies: parseMovies,
-  parsePeople: parsePeople,
-};
+// export default {
+//   parseCredits: parseCredits,
+//   parseMovieDetails: parseMovieDetails,
+//   parseMovies: parseMovies,
+//   parsePeople: parsePeople,
+// };
 
-function parseCredits(tmdbResponse) {
+export function parseCredits(tmdbResponse) {
   if (tmdbResponse) {
     const configuration = tmdb.getConfiguration();
     return {
@@ -64,7 +64,7 @@ function parseCrew(rawCrew, configuration) {
   }
 }
 
-function parseMovieDetails(tmdbResponse) {
+export function parseMovieDetails(tmdbResponse) {
   if (tmdbResponse) {
     return {
       budget: tmdbResponse.budget,
@@ -78,7 +78,7 @@ function parseMovieDetails(tmdbResponse) {
   }
 }
 
-function parseMovies(tmdbResponse, $vivContext) {
+export function parseMovies(tmdbResponse, $vivContext) {
   if (tmdbResponse && tmdbResponse.results && tmdbResponse.results.length > 0) {
     const configuration = tmdb.getConfiguration();
     return tmdbResponse.results.map(function (rawMovie) {
@@ -129,7 +129,7 @@ function parseMovieGenre(tmdbId) {
   }
 }
 
-function parsePeople(tmdbResponse) {
+export function parsePeople(tmdbResponse) {
   if (tmdbResponse && tmdbResponse.results && tmdbResponse.results.length > 0) {
     const configuration = tmdb.getConfiguration();
     return tmdbResponse.results.map(function (rawPerson) {

@@ -2,12 +2,12 @@ import questionsJson from "./quizQuestions.js";
 import config from 'config';
 import console from 'console';
 
-export default {
-  initializeQuiz,
-  updateQuiz,
-};
+// export default {
+//   initializeQuiz,
+//   updateQuiz,
+// };
 
-function initializeQuiz() {
+export function initializeQuiz() {
   var quiz = {
     completed: false,
     currentQuestion: 0,
@@ -16,7 +16,7 @@ function initializeQuiz() {
   return quiz;
 }
 
-function updateQuiz(quiz, answer) {
+export function updateQuiz(quiz, answer) {
   // See if answer corresponds to any of the current question options
   var matchedIndex = quiz.questions[quiz.currentQuestion].options.findIndex(
     function (option) {

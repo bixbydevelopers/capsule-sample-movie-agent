@@ -1,5 +1,5 @@
-import quizLogic from "./lib/quizLogic.js";
+import {initializeQuiz} from "./lib/quizLogic.js";
 
 export default function () {
-  return quizLogic.initializeQuiz();
+  return initializeQuiz();
 }
