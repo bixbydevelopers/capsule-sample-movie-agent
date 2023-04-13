@@ -4,15 +4,6 @@ import * as properties from "./properties.js";
 import movieGenreMap from "./movieGenreMap.js";
 import console from "console";
 
-// export default {
-//   discoverMovie: discoverMovie,
-//   getConfiguration: getConfiguration,
-//   getMovie: getMovie,
-//   getMovieCredits: getMovieCredits,
-//   getTrendingMovies: getTrendingMovies,
-//   searchPerson: searchPerson,
-// };
-
 export function discoverMovie(releaseDateTimeExpression, person, genre, $vivContext) {
   const url = 'https://api.themoviedb.org/3/discover/movie';
   const query = {

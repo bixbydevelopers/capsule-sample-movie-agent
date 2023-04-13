@@ -3,13 +3,6 @@ import * as tmdb from "./TMDB.js";
 import movieGenreMap from "./movieGenreMap.js";
 import console from "console";
 
-// export default {
-//   parseCredits: parseCredits,
-//   parseMovieDetails: parseMovieDetails,
-//   parseMovies: parseMovies,
-//   parsePeople: parsePeople,
-// };
-
 export function parseCredits(tmdbResponse) {
   if (tmdbResponse) {
     const configuration = tmdb.getConfiguration();
