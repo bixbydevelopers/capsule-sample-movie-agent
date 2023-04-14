@@ -2,11 +2,6 @@ import questionsJson from "./quizQuestions.js";
 import config from 'config';
 import console from 'console';
 
-// export default {
-//   initializeQuiz,
-//   updateQuiz,
-// };
-
 export function initializeQuiz() {
   var quiz = {
     completed: false,
