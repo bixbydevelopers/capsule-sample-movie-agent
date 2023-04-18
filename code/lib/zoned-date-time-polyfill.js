@@ -1,16 +1,5 @@
-/*! Dates Library v1.1.3 [Sidi] */
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
-var BixbyDurationUnit = {
+/*! Dates Library v1.1.4 */
+const BixbyDurationUnit = {
     YEARS: "Years",
     MONTHS: "Months",
     DAYS: "Days",
@@ -20,7 +9,7 @@ var BixbyDurationUnit = {
     MILLIS: "Millis",
 };
 export function durationFromMilliseconds(milliseconds) {
-    var duration = {
+    const duration = {
         periodDays: 0,
         periodHours: 0,
         periodMinutes: 0,
@@ -38,9 +27,127 @@ export function durationFromMilliseconds(milliseconds) {
     duration.periodDays = milliseconds;
     return duration;
 }
-var ZonedDateTime = (function () {
-    function ZonedDateTime(timeZoneIdOrGeoPoint, millisecondsFromEpoch, subtractOffset, convertTimeZoneId) {
-        var _a;
+export default class ZonedDateTime {
+    static setVivContext(vivContext) {
+        ZonedDateTime._vivContext = vivContext;
+    }
+    static _getTimeZoneOffset(timeZone, millisecondsFromEpoch) {
+        const formatter = new Intl.DateTimeFormat("en-GB", {
+            timeZone,
+            timeZoneName: "short",
+        });
+        const timeZoneOffset = formatter
+            .formatToParts(new Date(millisecondsFromEpoch))
+            .find((part) => part.type === "timeZoneName")?.value;
+        if (timeZoneOffset === undefined || timeZoneOffset === "UTC") {
+            return { offsetHours: 0, offsetMinutes: 0 };
+        }
+        const timeZoneOffsetValue = timeZoneOffset.split("GMT")[1];
+        const isNegative = timeZoneOffsetValue.includes("-");
+        const offsetHours = timeZoneOffsetValue.includes(":")
+            ? parseInt(timeZoneOffsetValue.split(":")[0], 10)
+            : parseInt(timeZoneOffsetValue, 10);
+        const offsetMinutes = timeZoneOffsetValue.includes(":")
+            ? parseInt(timeZoneOffsetValue.split(":")[1], 10)
+            : 0;
+        return {
+            offsetHours,
+            offsetMinutes: isNegative ? -offsetMinutes : offsetMinutes,
+        };
+    }
+    static now(timeZone) {
+        return new ZonedDateTime(timeZone ?? ZonedDateTime._vivContext.timezone, ZonedDateTime._vivContext.testToday ?? Date.now());
+    }
+    static of(timeZoneId, year = 0, month = 1, day = 1, hour = 0, minute = 0, second = 0, millisecond = 0) {
+        const timeZone = timeZoneId ?? ZonedDateTime._vivContext.timezone;
+        const millisecondsFromEpoch = Date.UTC(year, month - 1, day, hour, minute, second, millisecond);
+        const { offsetHours, offsetMinutes } = ZonedDateTime._getTimeZoneOffset(timeZone, millisecondsFromEpoch);
+        return new ZonedDateTime(timeZone, millisecondsFromEpoch - (offsetHours * 60 + offsetMinutes) * 60 * 1000);
+    }
+    static fromDate(date) {
+        const zdt = new ZonedDateTime();
+        const millisecondsFromEpoch = Date.UTC(date.year ?? zdt.getYear(), date.month ? date.month - 1 : zdt.getMonth() - 1, date.day ?? zdt.getDay());
+        return new ZonedDateTime(ZonedDateTime._vivContext.timezone, millisecondsFromEpoch);
+    }
+    static fromDateTime(dateTime) {
+        const timeZoneId = dateTime?.time?.timezone ?? ZonedDateTime._vivContext.timezone;
+        if (dateTime?.utcInstant) {
+            return new ZonedDateTime(timeZoneId, dateTime.utcInstant);
+        }
+        const millisecondsFromEpoch = this._vivContext.testToday || Date.now();
+        const zdt = new ZonedDateTime(timeZoneId, millisecondsFromEpoch);
+        return ZonedDateTime.of(timeZoneId, dateTime?.date?.year ?? zdt.getYear(), dateTime?.date?.month ?? zdt.getMonth(), dateTime?.date?.day ?? zdt.getDay(), dateTime?.time?.hour ?? zdt.getHour(), dateTime?.time?.minute ?? zdt.getMinute(), dateTime?.time?.second ?? zdt.getSecond(), dateTime?.time?.millisecond ?? zdt.getMillisecond());
+    }
+    static parseDate(date, timeZoneId) {
+        const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/;
+        const match = date.match(dateRegex);
+        if (match === null) {
+            throw new Error("Invalid date time string. Must be in ISO 8601 format. For example, '2020-01-01T00:00:00.000Z'");
+        }
+        const [_date, year, month, day] = match;
+        const zdt = new ZonedDateTime(timeZoneId ?? ZonedDateTime._vivContext.timezone, ZonedDateTime._vivContext.testToday ?? Date.now());
+        return ZonedDateTime.of(timeZoneId, parseInt(year, 10), parseInt(month, 10), parseInt(day, 10), zdt.getHour(), zdt.getMinute(), zdt.getSecond(), zdt.getMillisecond());
+    }
+    static parseTime(time, timeZoneId) {
+        const timeRegex = /^(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,3}))$/;
+        const match = time.match(timeRegex);
+        if (match === null) {
+            throw new Error("Invalid time string. Must be in ISO 8601 format. For example, '00:00:00.000' or '00:00:00'");
+        }
+        const [_date, hour, minutes, second, milliseconds] = match;
+        const zdt = new ZonedDateTime(timeZoneId ?? ZonedDateTime._vivContext.timezone, ZonedDateTime._vivContext.testToday ?? Date.now());
+        return ZonedDateTime.of(timeZoneId, zdt.getYear(), zdt.getMonth(), zdt.getDay(), parseInt(hour, 10), parseInt(minutes, 10), parseInt(second, 10), parseInt(milliseconds, 10));
+    }
+    static parseDateTime(dateTime, timeZoneId) {
+        const dateTimeRegex = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d{1,3}))?(?:(Z)|([+-]\d{2}(?::\d{2})?))?$/;
+        const match = dateTime.match(dateTimeRegex);
+        if (match === null) {
+            throw new Error("Invalid date string. Must be in ISO 8601 format. For example, '2020-01-01T00:00:00.000Z' or '2020-01-01T00:00:00' or '2020-01-01T00:00:00.000+00:00''");
+        }
+        const [_dateTime, year, month, day, hour, minute, second, millisecond, isUtc, timeZoneOffset,] = match;
+        let offsetHours = 0;
+        let offsetMinutes = 0;
+        if (!isUtc && timeZoneOffset !== undefined) {
+            const offsetSign = timeZoneOffset.startsWith("-") ? -1 : 1;
+            [offsetHours, offsetMinutes] = timeZoneOffset
+                .slice(1)
+                .split(":")
+                .map((n) => parseInt(n, 10) * offsetSign);
+        }
+        return ZonedDateTime.of(timeZoneId, parseInt(year, 10), parseInt(month, 10), parseInt(day, 10), parseInt(hour, 10) + offsetHours, parseInt(minute, 10) + offsetMinutes, parseInt(second, 10), parseInt(millisecond ?? "0", 10));
+    }
+    static _parseDateTimeString() {
+        return (input, timeZoneId) => {
+            let milliseconds;
+            if (input.includes("T") &&
+                !input.includes("Z") &&
+                (input.includes("+") || input.includes("-"))) {
+                const [dateStr, timeWithOffset] = input.split("T");
+                const offset = timeWithOffset.match(/([+-]\d{2}):(\d{2})/);
+                if (!offset) {
+                    milliseconds = input.includes("Z")
+                        ? Date.parse(input)
+                        : Date.parse(input + "Z");
+                }
+                else {
+                    const [offsetHours, offsetMinutes] = offset
+                        .slice(1)
+                        .map((s) => parseInt(s, 10));
+                    milliseconds =
+                        Date.parse(dateStr) +
+                            (offsetHours * 60 + offsetMinutes) * 60 * 1000;
+                }
+            }
+            else {
+                milliseconds = Date.parse(input);
+            }
+            if (isNaN(milliseconds)) {
+                throw new Error("Invalid date string. If you need pattern matching use a library like datetime or moment.js");
+            }
+            return new ZonedDateTime(timeZoneId ?? ZonedDateTime._vivContext.timezone, milliseconds);
+        };
+    }
+    constructor(timeZoneIdOrGeoPoint, millisecondsFromEpoch) {
         if (ZonedDateTime._vivContext === undefined) {
             throw new Error("ZonedDateTime._vivContext is undefined. Call ZonedDateTime.setVivContext($vivContext) before initialization.");
         }
@@ -50,106 +157,19 @@ var ZonedDateTime = (function () {
             throw new Error("ZonedDateTime not implemented using GeoPoint.");
         }
         this._timeZoneId =
-            timeZoneIdOrGeoPoint !== null && timeZoneIdOrGeoPoint !== void 0 ? timeZoneIdOrGeoPoint : ZonedDateTime._vivContext.timezone;
+            timeZoneIdOrGeoPoint ?? ZonedDateTime._vivContext.timezone;
         this._millisFromEpoch =
-            (_a = millisecondsFromEpoch !== null && millisecondsFromEpoch !== void 0 ? millisecondsFromEpoch : ZonedDateTime._vivContext.testToday) !== null && _a !== void 0 ? _a : Date.now();
-        this._date = ZonedDateTime._getDateWithTimeZone(this._timeZoneId, this._millisFromEpoch, subtractOffset,convertTimeZoneId);
+            millisecondsFromEpoch ??
+                ZonedDateTime._vivContext.testToday ??
+                Date.now();
     }
-    ZonedDateTime.setVivContext = function (vivContext) {
-        ZonedDateTime._vivContext = vivContext;
-    };
-    ZonedDateTime.now = function (timeZoneId) {
-        var _a;
-        return new ZonedDateTime(timeZoneId ? timeZoneId:ZonedDateTime._vivContext.timezone, (_a = ZonedDateTime._vivContext.testToday) !== null && _a !== void 0 ? _a : Date.now());
-    };
-    ZonedDateTime.of = function (timeZoneId, year, month, day, hour, minute, second, millisecond) {
-        if (year === void 0) { year = 0; }
-        if (month === void 0) { month = 1; }
-        if (day === void 0) { day = 1; }
-        if (hour === void 0) { hour = 0; }
-        if (minute === void 0) { minute = 0; }
-        if (second === void 0) { second = 0; }
-        if (millisecond === void 0) { millisecond = 0; }
-        var date = ZonedDateTime._getDateWithTimeZone(timeZoneId, new Date(year, month - 1, day, hour, minute, second, millisecond).getTime(), true);
-        return new ZonedDateTime(timeZoneId, date.getTime());
-    };
-    ZonedDateTime.fromDate = function (date) {
-        var _a, _b;
-        var currDate = ZonedDateTime._getCurrentDate();
-        var newDate = ZonedDateTime._getDateWithTimeZone(ZonedDateTime._vivContext.timezone, new Date((_a = date === null || date === void 0 ? void 0 : date.year) !== null && _a !== void 0 ? _a : currDate.getFullYear(), (date === null || date === void 0 ? void 0 : date.month) ? date.month - 1 : currDate.getMonth() + 1, (_b = date === null || date === void 0 ? void 0 : date.day) !== null && _b !== void 0 ? _b : currDate.getDate(), currDate.getHours(), currDate.getMinutes(), currDate.getSeconds(), currDate.getMilliseconds()).getTime(), true);
-        return new ZonedDateTime(ZonedDateTime._vivContext.timezone, newDate.getTime());
-    };
-    ZonedDateTime.fromDateTime = function (dateTime) {
-        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
-        var currDate = ZonedDateTime._getCurrentDate();
-        var millisecondsFromEpoch = (_a = dateTime === null || dateTime === void 0 ? void 0 : dateTime.utcInstant) !== null && _a !== void 0 ? _a : new Date((_c = (_b = dateTime.date) === null || _b === void 0 ? void 0 : _b.year) !== null && _c !== void 0 ? _c : currDate.getFullYear(), ((_d = dateTime.date) === null || _d === void 0 ? void 0 : _d.month)
-            ? dateTime.date.month - 1
-            : currDate.getMonth() + 1, (_f = (_e = dateTime.date) === null || _e === void 0 ? void 0 : _e.day) !== null && _f !== void 0 ? _f : currDate.getDate(), (_h = (_g = dateTime.time) === null || _g === void 0 ? void 0 : _g.hour) !== null && _h !== void 0 ? _h : currDate.getHours(), (_k = (_j = dateTime.time) === null || _j === void 0 ? void 0 : _j.minute) !== null && _k !== void 0 ? _k : currDate.getMinutes(), (_m = (_l = dateTime.time) === null || _l === void 0 ? void 0 : _l.second) !== null && _m !== void 0 ? _m : currDate.getSeconds(), (_p = (_o = dateTime.time) === null || _o === void 0 ? void 0 : _o.millisecond) !== null && _p !== void 0 ? _p : currDate.getMilliseconds()).getTime();
-        var newDate = ZonedDateTime._getDateWithTimeZone((_r = (_q = dateTime.time) === null || _q === void 0 ? void 0 : _q.timezone) !== null && _r !== void 0 ? _r : ZonedDateTime._vivContext.timezone, millisecondsFromEpoch, true);
-        return new ZonedDateTime((_t = (_s = dateTime.time) === null || _s === void 0 ? void 0 : _s.timezone) !== null && _t !== void 0 ? _t : ZonedDateTime._vivContext.timezone, newDate.getTime());
-    };
-    ZonedDateTime._getCurrentDate = function () {
-        return ZonedDateTime._vivContext.testToday
-            ? new Date(ZonedDateTime._vivContext.testToday)
-            : new Date();
-    };
-    ZonedDateTime._getDateWithTimeZone = function (timeZoneId, millisecondsFromEpoch, subtractOffset, convertTimeZoneId ) {
-        var dateWithTimeZone = new Date().toLocaleDateString("en-GB", {
-            timeZone: subtractOffset ? ZonedDateTime._vivContext.timezone : timeZoneId,
-            timeZoneName: "short",
-        });
-        var timeZoneOffset = 0;
-        if (dateWithTimeZone.includes("GMT")) {
-            var _a = dateWithTimeZone.split("GMT"), _ = _a[0], timeZoneOffsetString = _a[1];
-            timeZoneOffset = timeZoneOffsetString.includes(":")
-                ? parseInt(timeZoneOffsetString.split(":")[0], 10) +
-                    parseInt(timeZoneOffsetString.split(":")[1], 10) / 60
-                : parseInt(timeZoneOffsetString, 10);
-        }
-        var date = new Date(millisecondsFromEpoch);
-
-        if (subtractOffset ) {
-          if (!convertTimeZoneId){
-            timeZoneOffset = - timeZoneOffset;
-          }else {
-          timeZoneOffset = 0
-          }
-        }
-
-        date.setMinutes(date.getMinutes() + timeZoneOffset * 60);
-        return date;
-    };
-    ZonedDateTime._parseDateTimeString = function () {
-        return function (input, timeZoneId, convertTimeZoneId) {
-            var dateStr = input;
-            if (input.includes("T") && (input.includes("+") || input.includes("-"))) {
-                var _a = dateStr.split("T"), date = _a[0], timeWithOffset = _a[1];
-                var _b = timeWithOffset.split(/[+-]/), time = _b[0], _ = _b[1];
-                dateStr = "".concat(date, "T").concat(time);
-            }
-            var milliseconds = Date.parse(input);
-            if (isNaN(milliseconds)) {
-                throw new Error("Invalid date string. If you need pattern matching use a library like datetime or moment.js");
-            }
-            var millisInTimeZone = timeZoneId
-                ? ZonedDateTime._getDateWithTimeZone(timeZoneId !== null && timeZoneId !== void 0 ? timeZoneId : ZonedDateTime._vivContext.timezone, milliseconds, convertTimeZoneId ? false : true, true).getTime()
-                : milliseconds;
-            return new ZonedDateTime(timeZoneId !== null && timeZoneId !== void 0 ? timeZoneId : ZonedDateTime._vivContext.timezone, millisInTimeZone, true, true);
-        };
-    };
-    ZonedDateTime._getUtcInstant = function (timeZoneOffset, milliseconds) {
-        timeZoneOffset = - timeZoneOffset*1000
-        var date = new Date(milliseconds)
-        date = new Date(date.valueOf() + timeZoneOffset)
-        return date.valueOf()
+    getMillisFromEpoch() {
+        return this._millisFromEpoch;
     }
-    ZonedDateTime.prototype.getMillisFromEpoch = function () {
-        return ZonedDateTime._getUtcInstant(this.getTimeZoneOffset(), this._date);
-    };
-    ZonedDateTime.prototype.getTimeZoneId = function () {
+    getTimeZoneId() {
         return this._timeZoneId;
-    };
-    ZonedDateTime.prototype.getDateTime = function () {
+    }
+    getDateTime() {
         return {
             date: {
                 year: this.getYear(),
@@ -165,261 +185,265 @@ var ZonedDateTime = (function () {
             },
             utcInstant: this.getMillisFromEpoch(),
         };
-    };
-    ZonedDateTime.prototype.getDayOfWeek = function () {
-        return this._date.getDay();
-    };
-    ZonedDateTime.prototype.getYear = function () {
-        return this._date.getFullYear();
-    };
-    ZonedDateTime.prototype.getMonth = function () {
-        return this._date.getMonth() + 1;
-    };
-    ZonedDateTime.prototype.getDay = function () {
-        return this._date.getDate();
-    };
-    ZonedDateTime.prototype.getHour = function () {
-        return this._date.getHours();
-    };
-    ZonedDateTime.prototype.getMinute = function () {
-        return this._date.getMinutes();
-    };
-    ZonedDateTime.prototype.getSecond = function () {
-        return this._date.getSeconds();
-    };
-    ZonedDateTime.prototype.getMillisecond = function () {
-        return this._date.getMilliseconds();
-    };
-    ZonedDateTime.prototype.getTimeZoneOffset = function () {
-        var _a;
-        var options = {
-            timeZone: this._timeZoneId,
-            timeZoneName: "short",
-        };
-        var formatter = new Intl.DateTimeFormat("en-GB", options);
-        var timeZoneOffset = (_a = formatter
-            .formatToParts(this._date)
-            .find(function (part) { return part.type === "timeZoneName"; })) === null || _a === void 0 ? void 0 : _a.value;
-        if (timeZoneOffset === undefined || timeZoneOffset === "UTC") {
-            return 0;
+    }
+    getDayOfWeek() {
+        const date = new Date(this.getMillisFromEpoch());
+        const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
+            timeZone: this.getTimeZoneId(),
+            weekday: "short",
+        });
+        const parts = dateTimeFormat.formatToParts(date);
+        const dateString = parts[0].value;
+        switch (dateString) {
+            case "Mon":
+                return 1;
+            case "Tue":
+                return 2;
+            case "Wed":
+                return 3;
+            case "Thu":
+                return 4;
+            case "Fri":
+                return 5;
+            case "Sat":
+                return 6;
+            case "Sun":
+                return 7;
         }
-        var timeZoneOffsetValue = timeZoneOffset.split("GMT")[1];
-        var timeZoneOffsetHours = timeZoneOffsetValue.includes(":")
-            ? parseInt(timeZoneOffsetValue.split(":")[0], 10) +
-                parseInt(timeZoneOffsetValue.split(":")[1], 10) / 60
-            : parseInt(timeZoneOffsetValue, 10);
-        return timeZoneOffsetHours * 60 * 60;
-    };
-    ZonedDateTime.prototype.isDST = function () {
-        var janOffset = new Date(this._date.getFullYear(), 0, 1).getTimezoneOffset();
-        var julOffset = new Date(this._date.getFullYear(), 6, 1).getTimezoneOffset();
-        return Math.max(janOffset, julOffset) !== this._date.getTimezoneOffset();
-    };
-    ZonedDateTime.prototype.withYear = function (year) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setFullYear(year);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.withMonth = function (month) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setMonth(month - 1);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.withDay = function (day) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setDate(day);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.withHour = function (hour) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setHours(hour);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.withMinute = function (minute) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setMinutes(minute);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.withSecond = function (second) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setSeconds(second);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.withMillisecond = function (millisecond) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setMilliseconds(millisecond);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.withZoneSameInstant = function (timeZoneId) {
-        return new ZonedDateTime(timeZoneId, this._date.getTime(),true,false);
-    };
-    ZonedDateTime.prototype.withZoneSameLocal = function (timeZoneId) {
-        return new ZonedDateTime(timeZoneId, this._date.getTime());
-    };
-    ZonedDateTime.prototype.plusYears = function (years) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setFullYear(this._date.getFullYear() + years);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.plusMonths = function (months) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setMonth(this._date.getMonth() + months);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.plusDays = function (days) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setDate(this._date.getDate() + days);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.plusHours = function (hours) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setHours(this._date.getHours() + hours);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime(), true, true);
-    };
-    ZonedDateTime.prototype.plusMinutes = function (minutes) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setMinutes(this._date.getMinutes() + minutes);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.plusSeconds = function (seconds) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setSeconds(this._date.getSeconds() + seconds);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime(), true, true);
-    };
-    ZonedDateTime.prototype.plusMilliseconds = function (milliseconds) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setMilliseconds(this._date.getMilliseconds() + milliseconds);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.plusDuration = function (duration) {
-        var newDate = new Date(this.getMillisFromEpoch());
+    }
+    getYear() {
+        const date = new Date(this.getMillisFromEpoch());
+        const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
+            timeZone: this.getTimeZoneId(),
+            year: "numeric",
+        });
+        const parts = dateTimeFormat.formatToParts(date);
+        return parseInt(parts[0].value, 10);
+    }
+    getMonth() {
+        const date = new Date(this.getMillisFromEpoch());
+        const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
+            timeZone: this.getTimeZoneId(),
+            month: "numeric",
+        });
+        const parts = dateTimeFormat.formatToParts(date);
+        return parseInt(parts[0].value, 10);
+    }
+    getDay() {
+        const date = new Date(this.getMillisFromEpoch());
+        const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
+            timeZone: this.getTimeZoneId(),
+            day: "numeric",
+        });
+        const parts = dateTimeFormat.formatToParts(date);
+        return parseInt(parts[0].value, 10);
+    }
+    getHour() {
+        const date = new Date(this.getMillisFromEpoch());
+        const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
+            timeZone: this.getTimeZoneId(),
+            hour: "numeric",
+            hour12: false,
+        });
+        const parts = dateTimeFormat.formatToParts(date);
+        return parseInt(parts[0].value, 10) % 24;
+    }
+    getMinute() {
+        const date = new Date(this.getMillisFromEpoch());
+        const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
+            timeZone: this.getTimeZoneId(),
+            minute: "numeric",
+        });
+        const parts = dateTimeFormat.formatToParts(date);
+        return parseInt(parts[0].value, 10);
+    }
+    getSecond() {
+        const date = new Date(this.getMillisFromEpoch());
+        const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
+            timeZone: this.getTimeZoneId(),
+            second: "numeric",
+        });
+        const parts = dateTimeFormat.formatToParts(date);
+        return parseInt(parts[0].value, 10);
+    }
+    getMillisecond() {
+        const date = new Date(this.getMillisFromEpoch());
+        const dateTimeFormat = new Intl.DateTimeFormat("en-US", {
+            timeZone: this.getTimeZoneId(),
+            fractionalSecondDigits: 3,
+        });
+        const parts = dateTimeFormat.formatToParts(date);
+        return parseInt(parts[0].value, 10);
+    }
+    getTimeZoneOffset() {
+        const { offsetHours, offsetMinutes } = ZonedDateTime._getTimeZoneOffset(this.getTimeZoneId(), this.getMillisFromEpoch());
+        return offsetHours * 60 * 60 + offsetMinutes * 60;
+    }
+    isDST() {
+        const zdt = new ZonedDateTime(this.getTimeZoneId(), this.getMillisFromEpoch());
+        const janOffset = zdt.withDay(1).withMonth(1).getTimeZoneOffset() * -1;
+        const julOffset = zdt.withDay(1).withMonth(6).getTimeZoneOffset() * -1;
+        return Math.max(janOffset, julOffset) !== zdt.getTimeZoneOffset() * -1;
+    }
+    withYear(year) {
+        return ZonedDateTime.of(this.getTimeZoneId(), year, this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    withMonth(month) {
+        const date = new Date(this.getMillisFromEpoch());
+        return ZonedDateTime.of(this.getTimeZoneId(), date.getUTCFullYear(), month, date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds(), date.getUTCMilliseconds());
+    }
+    withDay(day) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), day, this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    withHour(hour) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), hour, this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    withMinute(minute) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour(), minute, this.getSecond(), this.getMillisecond());
+    }
+    withSecond(second) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), second, this.getMillisecond());
+    }
+    withMillisecond(millisecond) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond(), millisecond);
+    }
+    withZoneSameInstant(timeZoneId) {
+        return new ZonedDateTime(timeZoneId, this.getMillisFromEpoch());
+    }
+    withZoneSameLocal(timeZoneId) {
+        const dateTime = this.getDateTime();
+        return ZonedDateTime.of(timeZoneId, dateTime.date?.year, dateTime.date?.month, dateTime.date?.day, dateTime.time?.hour, dateTime.time?.minute, dateTime.time?.second, dateTime.time?.millisecond);
+    }
+    plusYears(years) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear() + years, this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    plusMonths(months) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth() + months, this.getDay(), this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    plusDays(days) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay() + days, this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    plusHours(hours) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour() + hours, this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    plusMinutes(minutes) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute() + minutes, this.getSecond(), this.getMillisecond());
+    }
+    plusSeconds(seconds) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond() + seconds, this.getMillisecond());
+    }
+    plusMilliseconds(milliseconds) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond() + milliseconds);
+    }
+    plusDuration(duration) {
+        const { offsetHours, offsetMinutes } = ZonedDateTime._getTimeZoneOffset(this.getTimeZoneId(), this.getMillisFromEpoch());
+        let zdt = new ZonedDateTime(this.getTimeZoneId(), this.getMillisFromEpoch());
         if (duration.periodYears) {
-            newDate.setFullYear(this._date.getFullYear() + duration.periodYears);
+            zdt = zdt.withYear(zdt.getYear() + duration.periodYears);
         }
         if (duration.periodMonths) {
-            newDate.setMonth(this._date.getMonth() + duration.periodMonths);
+            zdt = zdt.withMonth(zdt.getMonth() + duration.periodMonths);
         }
         if (duration.periodDays) {
-            newDate.setDate(this._date.getDate() + duration.periodDays);
+            zdt = zdt.withDay(zdt.getDay() + duration.periodDays);
         }
         if (duration.periodHours) {
-            newDate.setHours(this._date.getHours() + duration.periodHours);
+            zdt = zdt.withHour(zdt.getHour() + duration.periodHours + offsetHours);
         }
         if (duration.periodMinutes) {
-            newDate.setMinutes(this._date.getMinutes() + duration.periodMinutes);
+            zdt = zdt.withMinute(zdt.getMinute() + duration.periodMinutes + offsetMinutes);
         }
         if (duration.periodSeconds) {
-            newDate.setMilliseconds(this._date.getSeconds() + duration.periodSeconds);
+            zdt = zdt.withSecond(zdt.getSecond() + duration.periodSeconds);
         }
         if (duration.periodMilliseconds) {
-            newDate.setMilliseconds(this._date.getMilliseconds() + duration.periodMilliseconds);
+            zdt = zdt.withMillisecond(zdt.getMillisecond() + duration.periodMilliseconds);
         }
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.minusYears = function (years) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setFullYear(this._date.getFullYear() - years);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.minusMonths = function (months) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setMonth(this._date.getMonth() - months);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.minusDays = function (days) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setDate(this._date.getDate() - days);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.minusHours = function (hours) {
-        var newDate = this._date;
-        newDate.setHours(this._date.getHours() - hours);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime(), true, true);
-    };
-    ZonedDateTime.prototype.minusMinutes = function (minutes) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setMinutes(this._date.getMinutes() - minutes);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.minusSeconds = function (seconds) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setSeconds(this._date.getSeconds() - seconds);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.minusMilliseconds = function (milliseconds) {
-        var newDate = new Date(this.getMillisFromEpoch());
-        newDate.setMilliseconds(this._date.getMilliseconds() - milliseconds);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.minusDuration = function (duration) {
-        var newDate = new Date(this.getMillisFromEpoch());
+        return zdt;
+    }
+    minusYears(years) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear() - years, this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    minusMonths(months) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth() - months, this.getDay(), this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    minusDays(days) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay() - days, this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    minusHours(hours) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour() - hours, this.getMinute(), this.getSecond(), this.getMillisecond());
+    }
+    minusMinutes(minutes) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute() - minutes, this.getSecond(), this.getMillisecond());
+    }
+    minusSeconds(seconds) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond() - seconds, this.getMillisecond());
+    }
+    minusMilliseconds(milliseconds) {
+        return ZonedDateTime.of(this.getTimeZoneId(), this.getYear(), this.getMonth(), this.getDay(), this.getHour(), this.getMinute(), this.getSecond(), this.getMillisecond() - milliseconds);
+    }
+    minusDuration(duration) {
+        const { offsetHours, offsetMinutes } = ZonedDateTime._getTimeZoneOffset(this.getTimeZoneId(), this.getMillisFromEpoch());
+        let zdt = new ZonedDateTime(this.getTimeZoneId(), this.getMillisFromEpoch());
         if (duration.periodYears) {
-            newDate.setFullYear(this._date.getFullYear() - duration.periodYears);
+            zdt = zdt.withYear(zdt.getYear() - duration.periodYears);
         }
         if (duration.periodMonths) {
-            newDate.setMonth(this._date.getMonth() - duration.periodMonths);
+            zdt = zdt.withMonth(zdt.getMonth() - duration.periodMonths);
         }
         if (duration.periodDays) {
-            newDate.setDate(this._date.getDate() - duration.periodDays);
+            zdt = zdt.withDay(zdt.getDay() - duration.periodDays);
         }
         if (duration.periodHours) {
-            newDate.setHours(this._date.getHours() - duration.periodHours);
+            zdt = zdt.withHour(zdt.getHour() - duration.periodHours + offsetHours);
         }
         if (duration.periodMinutes) {
-            newDate.setMinutes(this._date.getMinutes() - duration.periodMinutes);
+            zdt = zdt.withMinute(zdt.getMinute() - duration.periodMinutes + offsetMinutes);
         }
         if (duration.periodSeconds) {
-            newDate.setMilliseconds(this._date.getSeconds() - duration.periodSeconds);
+            zdt = zdt.withSecond(zdt.getSecond() - duration.periodSeconds);
         }
         if (duration.periodMilliseconds) {
-            newDate.setMilliseconds(this._date.getMilliseconds() - duration.periodMilliseconds);
+            zdt = zdt.withMillisecond(zdt.getMillisecond() - duration.periodMilliseconds);
         }
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime());
-    };
-    ZonedDateTime.prototype.atStartOfDay = function () {
-        var newDate = this._date;
-        newDate.setHours(0);
-        newDate.setMinutes(0);
-        newDate.setSeconds(0);
-        newDate.setMilliseconds(0);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime(), true, true);
-    };
-    ZonedDateTime.prototype.atEndOfDay = function () {
-        var newDate = this._date;
-        newDate.setHours(23);
-        newDate.setMinutes(59);
-        newDate.setSeconds(59);
-        newDate.setMilliseconds(999);
-        return new ZonedDateTime(this.getTimeZoneId(), newDate.getTime(), true, true);
-    };
-    ZonedDateTime.prototype.compareTo = function (other) {
-        var timeDiff = this._date.getTime() - other._date.getTime();
+        return new ZonedDateTime(this.getTimeZoneId(), zdt.getMillisFromEpoch());
+    }
+    atStartOfDay() {
+        let zdt = new ZonedDateTime(this.getTimeZoneId(), this.getMillisFromEpoch());
+        return zdt.withHour(0).withMinute(0).withSecond(0).withMillisecond(0);
+    }
+    atEndOfDay() {
+        let zdt = new ZonedDateTime(this.getTimeZoneId(), this.getMillisFromEpoch());
+        return zdt.withHour(23).withMinute(59).withSecond(59).withMillisecond(999);
+    }
+    compareTo(other) {
+        const timeDiff = this.getMillisFromEpoch() - other.getMillisFromEpoch();
         return timeDiff === 0 ? 0 : timeDiff > 0 ? 1 : -1;
-    };
-    ZonedDateTime.prototype.isEqualTo = function (other) {
-        return this._date.getTime() === other._date.getTime();
-    };
-    ZonedDateTime.prototype.isBefore = function (other) {
-        return this._date.getTime() < other._date.getTime();
-    };
-    ZonedDateTime.prototype.isBeforeOrEqualTo = function (other) {
-        return this._date.getTime() <= other._date.getTime();
-    };
-    ZonedDateTime.prototype.isAfter = function (other) {
-        return this._date.getTime() > other._date.getTime();
-    };
-    ZonedDateTime.prototype.isAfterOrEqualTo = function (other) {
-        return this._date.getTime() >= other._date.getTime();
-    };
-    ZonedDateTime.prototype.durationUntil = function (other, unit) {
-        var duration = {};
-        var timeDiff = other._date.getTime() - this._date.getTime();
-        var periodYear = 1000 * 60 * 60 * 24 * 365;
-        var periodMonth = 1000 * 60 * 60 * 24 * 30;
-        var periodDay = 1000 * 60 * 60 * 24;
-        var periodHour = 1000 * 60 * 60;
-        var periodMinute = 1000 * 60;
-        var periodSecond = 1000;
+    }
+    isEqualTo(other) {
+        return this.getMillisFromEpoch() === other.getMillisFromEpoch();
+    }
+    isBefore(other) {
+        return this.getMillisFromEpoch() < other.getMillisFromEpoch();
+    }
+    isBeforeOrEqualTo(other) {
+        return this.getMillisFromEpoch() <= other.getMillisFromEpoch();
+    }
+    isAfter(other) {
+        return this.getMillisFromEpoch() > other.getMillisFromEpoch();
+    }
+    isAfterOrEqualTo(other) {
+        return this.getMillisFromEpoch() >= other.getMillisFromEpoch();
+    }
+    durationUntil(other, unit) {
+        const duration = {};
+        const timeDiff = other.getMillisFromEpoch() - this.getMillisFromEpoch();
+        const periodYear = 1000 * 60 * 60 * 24 * 365;
+        const periodMonth = 1000 * 60 * 60 * 24 * 30;
+        const periodDay = 1000 * 60 * 60 * 24;
+        const periodHour = 1000 * 60 * 60;
+        const periodMinute = 1000 * 60;
+        const periodSecond = 1000;
         switch (unit) {
             case BixbyDurationUnit.YEARS:
                 duration.periodYears = Math.floor(timeDiff / periodYear);
@@ -443,20 +467,21 @@ var ZonedDateTime = (function () {
                 duration.periodMilliseconds = timeDiff;
                 return duration;
             default:
-                var timeRemaining = timeDiff;
-                var periodYears = Math.floor(timeRemaining / periodYear);
+            {
+                let timeRemaining = timeDiff;
+                const periodYears = Math.floor(timeRemaining / periodYear);
                 timeRemaining -= periodYears * periodYear;
-                var periodMonths = Math.floor(timeRemaining / periodMonth);
+                const periodMonths = Math.floor(timeRemaining / periodMonth);
                 timeRemaining -= periodMonths * periodMonth;
-                var periodDays = Math.floor(timeRemaining / periodDay);
+                const periodDays = Math.floor(timeRemaining / periodDay);
                 timeRemaining -= periodDays * periodDay;
-                var periodHours = Math.floor(timeRemaining / periodHour);
+                const periodHours = Math.floor(timeRemaining / periodHour);
                 timeRemaining -= periodHours * periodHour;
-                var periodMinutes = Math.floor(timeRemaining / periodMinute);
+                const periodMinutes = Math.floor(timeRemaining / periodMinute);
                 timeRemaining -= periodMinutes * periodMinute;
-                var periodSeconds = Math.floor(timeRemaining / periodSecond);
+                const periodSeconds = Math.floor(timeRemaining / periodSecond);
                 timeRemaining -= periodSeconds * periodSecond;
-                var periodMilliseconds = timeRemaining;
+                const periodMilliseconds = timeRemaining;
                 duration.periodYears = periodYears;
                 duration.periodMonths = periodMonths;
                 duration.periodDays = periodDays;
@@ -464,50 +489,56 @@ var ZonedDateTime = (function () {
                 duration.periodMinutes = periodMinutes;
                 duration.periodSeconds = periodSeconds;
                 duration.periodMilliseconds = periodMilliseconds;
+            }
         }
         return duration;
-    };
-    ZonedDateTime.prototype.clone = function () {
+    }
+    clone() {
         return new ZonedDateTime(this.getTimeZoneId(), this.getMillisFromEpoch());
-    };
-    ZonedDateTime.prototype.toIsoString = function () {
-        return this._date.toISOString();
-    };
-    ZonedDateTime.prototype.toString = function () {
-        return this._date.toString();
-    };
-    ZonedDateTime.prototype.toJSON = function () {
+    }
+    toIsoString() {
+        return new Date(this.getMillisFromEpoch()).toISOString();
+    }
+    toString() {
+        const date = new Date(this.getMillisFromEpoch());
+        const isoDateTime = date.toISOString().replace("Z", "");
+        const timeZoneOffset = this.getTimeZoneOffset();
+        const offsetHours = Math.floor(Math.abs(timeZoneOffset) / 60 / 60)
+            .toString()
+            .padStart(2, "0");
+        const offsetMinutes = (Math.abs(timeZoneOffset) % (60 * 60))
+            .toString()
+            .padStart(2, "0");
+        const sign = timeZoneOffset >= 0 ? "+" : "-";
+        return `${isoDateTime}${sign}${offsetHours}:${offsetMinutes}`;
+    }
+    toJSON() {
         return {
             date: {
-                year: this._date.getFullYear(),
-                month: this._date.getMonth() + 1,
-                day: this._date.getDate(),
+                year: this.getYear(),
+                month: this.getMonth(),
+                day: this.getDay(),
             },
             time: {
-                hour: this._date.getHours(),
-                minute: this._date.getMinutes(),
-                second: this._date.getSeconds(),
-                millisecond: this._date.getMilliseconds(),
-                timezone: this._timeZoneId,
+                hour: this.getHour(),
+                minute: this.getMinute(),
+                second: this.getSecond(),
+                millisecond: this.getMillisecond(),
+                timezone: this.getTimeZoneId(),
             },
-            utcInstant: this._date.getTime(),
+            utcInstant: this.getMillisFromEpoch(),
         };
-    };
-    ZonedDateTime.prototype.format = function (options, locale) {
+    }
+    format(options, locale) {
         if (typeof options === "string") {
             throw new Error("This function supports passing object Intl.DateTimeFormatOptions. Pattern as a string not supported. For string pattern matching use a library like datetime or moment.js.");
         }
         if (options) {
-            var formatter = new Intl.DateTimeFormat(locale !== null && locale !== void 0 ? locale : ZonedDateTime._vivContext.locale, __assign({ timeZone: this._timeZoneId }, options));
-            return formatter.format(new Date(this._millisFromEpoch));
+            const formatter = new Intl.DateTimeFormat(locale ?? ZonedDateTime._vivContext.locale, { timeZone: this.getTimeZoneId(), ...options });
+            return formatter.format(new Date(this.getMillisFromEpoch()));
         }
         else {
-            return this._date.toISOString();
+            return this.toIsoString();
         }
-    };
-    ZonedDateTime.parseDate = ZonedDateTime._parseDateTimeString();
-    ZonedDateTime.parseTime = ZonedDateTime._parseDateTimeString();
-    ZonedDateTime.parseDateTime = ZonedDateTime._parseDateTimeString();
-    return ZonedDateTime;
-}());
-export default ZonedDateTime;
+    }
+}
