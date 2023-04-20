@@ -1,8 +1,8 @@
-var tmdb = require('./lib/TMDB.js')
-var parser = require('./lib/parser.js')
+import * as tmdb from "./lib/TMDB.js";
+import * as parser from "./lib/parser.js";
 
-module.exports.function = function fetchMovieDetails(movie) {
-  const response = tmdb.getMovie(movie)
-  const movieDetails = parser.parseMovieDetails(response)
-  return movieDetails
+export default function fetchMovieDetails({ movie }) {
+  const response = tmdb.getMovie(movie);
+  const movieDetails = parser.parseMovieDetails(response);
+  return movieDetails;
 }

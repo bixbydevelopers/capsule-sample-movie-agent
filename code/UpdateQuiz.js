@@ -1,5 +1,5 @@
-const { updateQuiz } = require("./lib/quizLogic.js")
+import {updateQuiz} from "./lib/quizLogic.js";
 
-module.exports.function = function (quiz, answer) {
-  return updateQuiz (quiz, answer)
+export default function ({ quiz, answer }) {
+  return updateQuiz(quiz, answer);
 }
